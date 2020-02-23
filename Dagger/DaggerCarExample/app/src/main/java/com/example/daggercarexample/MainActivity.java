@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
 
         CarComponent component = DaggerCarComponent.create();
         component.inject(this);
-
         car.drive();
     }
 }
