@@ -19,15 +19,10 @@ public interface ActivityComponent {
     Car getCar();
     void inject(MainActivity mainActivity);
 
-    @Subcomponent.Builder
-    interface Builder{
+    @Subcomponent.Factory
+    interface Factory {
+        ActivityComponent create(@BindsInstance @Named("horsePower") int horsePower,
+                              @BindsInstance @Named("engine capacity") int engineCapacity);
 
-        @BindsInstance
-        Builder horsePower(@Named("horsePower") int horsePower);
-
-        @BindsInstance
-        Builder engineCapacity(@Named("engine capacity") int engineCapacity);
-
-        ActivityComponent build();
     }
 }

@@ -10,10 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2a8bf92-daac-4541-ae36-4ed7f00d0210" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/ExampleApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/ExampleApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/car/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/car/Driver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/ActivityComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/ActivityComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/AppComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/AppComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/DriverModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/DriverModule.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,10 +40,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/car/Driver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="7" column="67" selection-start-line="7" selection-start-column="67" selection-end-line="7" selection-end-column="67" />
+            <state relative-caret-position="220">
+              <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#258#259#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -50,10 +53,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/DriverModule.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="16" column="28" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="28" />
+            <state relative-caret-position="484">
+              <caret line="22" column="36" selection-start-line="22" selection-start-column="36" selection-end-line="22" selection-end-column="36" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#300#301#0" expanded="true" />
+                <element signature="e#344#345#0" expanded="true" />
                 <element signature="e#283#284#0" expanded="true" />
                 <element signature="e#318#319#0" expanded="true" />
               </folding>
@@ -77,8 +82,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="110">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
+            <state relative-caret-position="308">
+              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/ActivityComponent.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="154">
+              <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -98,20 +115,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/ActivityComponent.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/AppComponent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="25" column="62" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="62" />
+            <state relative-caret-position="352">
+              <caret line="16" column="53" selection-start-line="16" selection-start-column="53" selection-end-line="16" selection-end-column="53" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/AppComponent.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/ExampleApp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="13" column="58" selection-start-line="13" selection-start-column="58" selection-end-line="13" selection-end-column="58" />
+            <state relative-caret-position="352">
+              <caret line="16" column="62" selection-start-line="16" selection-start-column="62" selection-end-line="16" selection-end-column="62" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -160,12 +180,12 @@
         <option value="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/PerActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/car/Car.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/CarComponent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/car/Driver.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/ExampleApp.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/DriverModule.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/AppComponent.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/MainActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/ActivityComponent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/car/Driver.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/DriverModule.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/AppComponent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/example/daggercarexample/ExampleApp.java" />
       </list>
     </option>
   </component>
@@ -471,18 +491,6 @@
         <state relative-caret-position="-308" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/ExampleApp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#494#495#0" expanded="true" />
-            <element signature="e#526#527#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/PerActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
@@ -504,28 +512,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/DriverModule.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="16" column="28" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#283#284#0" expanded="true" />
-            <element signature="e#318#319#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/car/Driver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="67" selection-start-line="7" selection-start-column="67" selection-end-line="7" selection-end-column="67" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/DieselEngineModule.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
@@ -539,27 +525,65 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/ActivityComponent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        <state relative-caret-position="154">
+          <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/AppComponent.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="13" column="58" selection-start-line="13" selection-start-column="58" selection-end-line="13" selection-end-column="58" />
+        <state relative-caret-position="308">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/ActivityComponent.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/car/Driver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="25" column="62" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="62" />
+        <state relative-caret-position="220">
+          <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#258#259#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/DriverModule.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="22" column="36" selection-start-line="22" selection-start-column="36" selection-end-line="22" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#300#301#0" expanded="true" />
+            <element signature="e#344#345#0" expanded="true" />
+            <element signature="e#283#284#0" expanded="true" />
+            <element signature="e#318#319#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/dagger/AppComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="16" column="53" selection-start-line="16" selection-start-column="53" selection-end-line="16" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/daggercarexample/ExampleApp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="16" column="62" selection-start-line="16" selection-start-column="62" selection-end-line="16" selection-end-column="62" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
