@@ -4,6 +4,8 @@ import com.example.daggercarexample.car.Rims;
 import com.example.daggercarexample.car.Tires;
 import com.example.daggercarexample.car.Wheels;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -13,7 +15,6 @@ public abstract class WheelsModule {
     static Rims provideRims() {
         return new Rims();
     }
-
     @Provides
     static Tires provideTires() {
         Tires tires = new Tires();
