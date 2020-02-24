@@ -2,7 +2,10 @@ package com.example.daggercarexample.dagger;
 
 import android.app.AlertDialog.Builder;
 
+import androidx.core.app.ActivityCompat;
+
 import com.example.daggercarexample.MainActivity;
+import com.example.daggercarexample.car.Car;
 
 import javax.inject.Named;
 
@@ -11,12 +14,12 @@ import dagger.Component;
 import dagger.Subcomponent;
 
 @PerActivity
-@Subcomponent(modules = {WheelsModule.class, DieselEngineModule.class})
+@Subcomponent(modules = {WheelsModule.class, PetrolEngineModule.class})
 public interface ActivityComponent {
-    //Car getCar();
+    Car getCar();
     void inject(MainActivity mainActivity);
 
-    /*@Component.Builder
+    @Subcomponent.Builder
     interface Builder{
 
         @BindsInstance
@@ -25,8 +28,6 @@ public interface ActivityComponent {
         @BindsInstance
         Builder engineCapacity(@Named("engine capacity") int engineCapacity);
 
-        Builder appComponent(AppComponent component);
-
         ActivityComponent build();
-    }*/
+    }
 }
