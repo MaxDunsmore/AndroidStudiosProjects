@@ -3,8 +3,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.daggercarexample.car.Car;
 import com.example.daggercarexample.dagger.ActivityComponent;
-import com.example.daggercarexample.dagger.DaggerActivityComponent;
 import com.example.daggercarexample.dagger.DaggerAppComponent;
+import com.example.daggercarexample.dagger.DieselEngineModule;
 
 import javax.inject.Inject;
 
@@ -17,11 +17,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ActivityComponent component = DaggerActivityComponent
-                .builder()
-                .horsePower(120)
-                .engineCapacity(240)
-                .appComponent(((ExampleApp) getApplication()).getAppComponent()).build();
+        ActivityComponent component =((ExampleApp)getApplication())
+                .getAppComponent().getActivityComponent(new DieselEngineModule(120));
         component.inject(this);
         car1.drive();
         car2.drive();
