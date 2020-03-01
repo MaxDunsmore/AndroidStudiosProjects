@@ -1,0 +1,2 @@
+rootProject.name='MVVMRecyclerViewJava'
+include ':app'
