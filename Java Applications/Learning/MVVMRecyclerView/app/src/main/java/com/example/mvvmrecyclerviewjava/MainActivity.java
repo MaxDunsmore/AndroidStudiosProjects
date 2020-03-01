@@ -50,6 +50,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mainActivityViewModel.getIsUpdating().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean){
+                    showProgressBar();
+                }
+                else {
+                    hideProgressBar();
+                    mRecyclerView.smoothScrollToPosition(mainActivityViewModel.getNicePlaces().getValue().size()-1);
+                }
+            }
+        });
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivityViewModel.addNewValue(
+                        new NicePlace("https://upload.wikimedia.org/wikipedia/commons/7/7c/Sydney_Harbour_Bridge_during_closing_ceremonies_of_the_2000_Olympics_games_in_Sydney.JPEG","Sydney")
+                );
+            }
+        });
+
         initRecyclerView();
     }
 
