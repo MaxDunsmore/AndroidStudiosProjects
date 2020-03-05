@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -23,27 +24,64 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //emit an observable every time interval
-        Observable<Long> intervalObservable = Observable
-                .interval(1, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.io())
-                .takeWhile(new Predicate<Long>() { // stop process if more then 5 seconds pass
+        fromIterable();
+        fromCallable();
+    }
+
+    private void fromCallable() {
+        // database transaction
+        //methods execute once a method has subscribed
+        Observable<Task> callable = Observable
+                .fromCallable(new Callable<Task>() {
                     @Override
-                    public boolean test(Long aLong) throws Exception {
-                        Log.d(TAG,"test: "+ aLong +", thread: " + Thread.currentThread().getName());
-                        return aLong <= 5;
+                    public Task call() throws Exception {
+                        return MyDatabase.getTask();
                     }
                 })
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-        intervalObservable.subscribe(new Observer<Long>() {
+
+        // method executes now since something has subscribed
+        callable.subscribe(new Observer<Task>() {
             @Override
             public void onSubscribe(Disposable d) {
 
             }
 
             @Override
-            public void onNext(Long aLong) {
-                Log.d(TAG,"onNext: " + aLong);
+            public void onNext(Task task) {
+                Log.d(TAG, "onNext: : " + task.getDescription());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
+
+    }
+
+    private void fromIterable() {
+        Observable<Task> taskObservable = Observable
+                .fromIterable(DataSource.createTasksList())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+        taskObservable.subscribe(new Observer<Task>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Task task) {
+                Log.d(TAG, "onNext: : " + task.getDescription());
             }
 
             @Override
