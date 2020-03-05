@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
         <variable
             name="clickHandler"
             type="com.example.ecommerce.RegisterActivity.ClickHandler" />
+        <variable
+            name="user"
+            type="com.example.ecommerce.User" />
     </data>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -36,6 +40,7 @@
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
         android:textSize="17sp"
+        android:text="@={user.phoneNumber}"
         />
     <EditText
         android:id="@+id/register_username_input"
@@ -51,6 +56,7 @@
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
         android:textSize="17sp"
+        android:text="@={user.name}"
         />
     <EditText
         android:id="@+id/register_password_input"
@@ -67,6 +73,7 @@
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
         android:textSize="17sp"
+        android:text="@={user.password}"
         />
 
     <Button
@@ -84,6 +91,7 @@
         android:textSize="18sp"
         android:text="Create Account"
         android:textColor="@android:color/white"
+        android:onClick="@{clickHandler::registerButtonClick}"
 
         />
 
