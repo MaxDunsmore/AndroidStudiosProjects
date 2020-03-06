@@ -45,14 +45,8 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
-    // jetpack Navigation Component
-    def nav_version = "2.3.0-alpha03"
-    implementation "androidx.navigation:navigation-fragment:$nav_version"
-    implementation "androidx.navigation:navigation-ui:$nav_version"
-
-    def material_version = "1.1.0-alpha07"
-    implementation "com.google.android.material:material:$material_version"
-
+  // paper
+    implementation 'io.paperdb:paperdb:2.6'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 

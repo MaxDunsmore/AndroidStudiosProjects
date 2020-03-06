@@ -37,7 +37,7 @@
             android:textAlignment="center"
             android:textColor="@color/colorTitle"
             android:textSize="32sp"
-            android:textStyle="bold|italic" />
+            android:textStyle="italic" />
 
         <TextView
             android:id="@+id/app_slogan"

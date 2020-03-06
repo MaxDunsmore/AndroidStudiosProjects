@@ -3,6 +3,8 @@ package com.example.ecommerce;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
+import com.example.ecommerce.BR;
+
 public class User extends BaseObservable {
     @Bindable
     public String getName() {

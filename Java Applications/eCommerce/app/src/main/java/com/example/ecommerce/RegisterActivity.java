@@ -8,11 +8,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 
 import com.example.ecommerce.databinding.ActivityRegisterBinding;
@@ -63,12 +60,12 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void createAccount() {
-        if (mainBinding.getUser().getName() == null || mainBinding.getUser().getName().isEmpty()) {
+        if (user.getName() == null || mainBinding.getUser().getName().isEmpty()) {
             Toast.makeText(this, "Please enter your name....", Toast.LENGTH_SHORT).show();
         } else if (user.getPhoneNumber() == null || mainBinding.getUser().getPhoneNumber().isEmpty()) {
             Toast.makeText(this, "Please enter your phone number ....", Toast.LENGTH_SHORT).show();
         } else if (user.getPassword() == null || mainBinding.getUser().getPassword().isEmpty()) {
-            Toast.makeText(this, "Please enter your phone password ....", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter your password ....", Toast.LENGTH_SHORT).show();
         } else {
             String name = user.getName();
             String password = user.getPassword();
