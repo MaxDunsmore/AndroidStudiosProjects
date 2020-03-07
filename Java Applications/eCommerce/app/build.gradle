@@ -49,10 +49,20 @@ dependencies {
     // paper
     implementation 'io.paperdb:paperdb:2.6'
 
+    // circle imageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     implementation 'androidx.databinding:databinding-compiler-common:3.6.1'
     implementation 'androidx.wear:wear:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.navigation:navigation-fragment:2.2.1'
+    implementation 'androidx.navigation:navigation-ui:2.2.1'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     apply plugin: 'com.android.application'
     apply plugin: 'com.google.gms.google-services'
     testImplementation 'junit:junit:4.12'
