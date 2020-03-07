@@ -24,26 +24,26 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
+
     // data binding
-    ActivityRegisterBinding mainBinding;
+    ActivityRegisterBinding activityRegisterBinding;
 
     // vars
     private ClickHandler clickHandler;
     private User user;
-
     private ProgressDialog loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_register);
+        activityRegisterBinding = DataBindingUtil.setContentView(this, R.layout.activity_register);
 
         loadingBar = new ProgressDialog(this);
 
         user = new User();
-        mainBinding.setUser(user);
+        activityRegisterBinding.setUser(user);
         clickHandler = new ClickHandler(this);
-        mainBinding.setClickHandler(clickHandler);
+        activityRegisterBinding.setClickHandler(clickHandler);
 
     }
 
@@ -60,12 +60,14 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void createAccount() {
-        if (user.getName() == null || mainBinding.getUser().getName().isEmpty()) {
+        if (user.getName() == null || activityRegisterBinding.getUser().getName().isEmpty()) {
             Toast.makeText(this, "Please enter your name....", Toast.LENGTH_SHORT).show();
-        } else if (user.getPhoneNumber() == null || mainBinding.getUser().getPhoneNumber().isEmpty()) {
+        } else if (user.getPhoneNumber() == null || activityRegisterBinding.getUser().getPhoneNumber().isEmpty()) {
             Toast.makeText(this, "Please enter your phone number ....", Toast.LENGTH_SHORT).show();
-        } else if (user.getPassword() == null || mainBinding.getUser().getPassword().isEmpty()) {
+        } else if (user.getPassword() == null || activityRegisterBinding.getUser().getPassword().isEmpty()) {
             Toast.makeText(this, "Please enter your password ....", Toast.LENGTH_SHORT).show();
+        }else if (user.getPhoneNumber().length() < 10) {
+            Toast.makeText(this, "Please enter your phone number ....", Toast.LENGTH_SHORT).show();
         } else {
             String name = user.getName();
             String password = user.getPassword();
@@ -99,20 +101,16 @@ public class RegisterActivity extends AppCompatActivity {
                                     }
                                     else {
                                         loadingBar.dismiss();
-                                        Toast.makeText(RegisterActivity.this,"Network Erro: Please Try Again...",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RegisterActivity.this,"Network Error: Please Try Again...",Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
-
                 } else {
                     Toast.makeText(RegisterActivity.this, "This phone number: " + phoneNumber + " already exists", Toast.LENGTH_SHORT).show();
                     loadingBar.dismiss();
                     Toast.makeText(RegisterActivity.this, "Please try again using another phone number", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RegisterActivity.this, RegisterActivity.class);
-                    startActivity(intent);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

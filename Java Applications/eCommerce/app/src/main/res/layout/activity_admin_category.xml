@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="clickHandler"
+            type="com.example.ecommerce.AdminCategoryActivity.ClickHandler" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/ScrollView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/addproductbg">
+
+        <TextView
+            android:id="@+id/slogan_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:fontFamily="@font/abril_fatface"
+            android:text="Add a new product"
+            android:textAlignment="center"
+            android:textColor="@color/colorDark"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/slogan_category">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/fFashion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/abril_fatface"
+                    android:text="Female fashion"
+                    android:textColor="@color/colorDark"
+                    android:textSize="26sp"
+                    android:textStyle="italic" />
+
+                <HorizontalScrollView
+                    android:id="@+id/femaleFashionScrollView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/fFashion"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="20dp">
+
+                    <LinearLayout
+                        android:id="@+id/linear1_category_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/slogan_category"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/fDress"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::dressF}"
+                            android:src="@drawable/dressf" />
+
+                        <ImageView
+                            android:id="@+id/fJacket"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::jacketF}"
+                            android:src="@drawable/jacketf" />
+
+                        <ImageView
+                            android:id="@+id/fPants"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::pantsF}"
+                            android:src="@drawable/pantsf" />
+
+                        <ImageView
+                            android:id="@+id/fShirt"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::shirtF}"
+                            android:src="@drawable/shirtf" />
+
+                        <ImageView
+                            android:id="@+id/fShoes"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::shoesF}"
+                            android:src="@drawable/shoesf" />
+
+                        <ImageView
+                            android:id="@+id/fShort"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::shortsF}"
+                            android:src="@drawable/shortn" />
+
+                        <ImageView
+                            android:id="@+id/fSkirt"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::shirtF}"
+                            android:src="@drawable/skirtf" />
+
+                        <ImageView
+                            android:id="@+id/fSocks"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::socksF}"
+                            android:src="@drawable/socks" />
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <TextView
+                    android:id="@+id/mFashion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/femaleFashionScrollView"
+                    android:layout_marginLeft="25dp"
+                    android:fontFamily="@font/abril_fatface"
+                    android:text="Male fashion"
+                    android:textColor="@color/colorDark"
+                    android:textSize="26sp"
+                    android:textStyle="italic" />
+
+                <HorizontalScrollView
+                    android:id="@+id/maleFashionScrollView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mFashion"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="23dp"
+                    android:layout_marginRight="20dp">
+
+                    <LinearLayout
+                        android:id="@+id/linear2_category_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/slogan_category"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/mJacket"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::jacketM}"
+                            android:src="@drawable/jacketm" />
+
+                        <ImageView
+                            android:id="@+id/mShirt"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::shirtM}"
+                            android:src="@drawable/shirtm" />
+
+                        <ImageView
+                            android:id="@+id/mShort"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::shortsM}"
+                            android:src="@drawable/shortn" />
+
+                        <ImageView
+                            android:id="@+id/mPants"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::pantsM}"
+                            android:src="@drawable/pantsm" />
+
+                        <ImageView
+                            android:id="@+id/mShoes"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::shoesM}"
+                            android:src="@drawable/shoesm" />
+
+                        <ImageView
+                            android:id="@+id/mSocks"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::socksM}"
+                            android:src="@drawable/socks" />
+
+                        <ImageView
+                            android:id="@+id/mBelt"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::beltsM}"
+                            android:src="@drawable/belt" />
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <TextView
+                    android:id="@+id/electronics"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/maleFashionScrollView"
+                    android:layout_marginLeft="25dp"
+                    android:fontFamily="@font/abril_fatface"
+                    android:text="Electronics"
+                    android:textColor="@color/colorDark"
+                    android:textSize="26sp"
+                    android:textStyle="italic" />
+
+                <HorizontalScrollView
+                    android:id="@+id/ElectronicScrollView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/electronics"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="20dp">
+
+                    <LinearLayout
+                        android:id="@+id/linear3_category_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/computer"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::computer}"
+                            android:src="@drawable/computer" />
+
+                        <ImageView
+                            android:id="@+id/gaming"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::gaming}"
+                            android:src="@drawable/gaming" />
+
+                        <ImageView
+                            android:id="@+id/gps"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::carAccessories}"
+                            android:src="@drawable/gps" />
+
+                        <ImageView
+                            android:id="@+id/headphones"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::audio}"
+                            android:src="@drawable/headphones" />
+
+                        <ImageView
+                            android:id="@+id/phone"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::phone}"
+                            android:src="@drawable/phone" />
+
+                        <ImageView
+                            android:id="@+id/photograph"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::camera}"
+                            android:src="@drawable/photograph" />
+
+                        <ImageView
+                            android:id="@+id/smarthome"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::smartHome}"
+                            android:src="@drawable/smarthome" />
+
+                        <ImageView
+                            android:id="@+id/tv"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::tv}"
+                            android:src="@drawable/tv" />
+
+
+                    </LinearLayout>
+
+
+                </HorizontalScrollView>
+
+                <TextView
+                    android:id="@+id/homeAndGarden"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ElectronicScrollView"
+                    android:layout_marginLeft="25dp"
+                    android:fontFamily="@font/abril_fatface"
+                    android:text="Home and Garden"
+                    android:textColor="@color/colorDark"
+                    android:textSize="26sp"
+                    android:textStyle="italic" />
+
+                <HorizontalScrollView
+                    android:id="@+id/homeAndGardenScrollView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/homeAndGarden"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="20dp">
+
+                    <LinearLayout
+                        android:id="@+id/linear4_category_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/bed"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::furniture}"
+                            android:src="@drawable/bed" />
+
+                        <ImageView
+                            android:id="@+id/tools"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::tool}"
+                            android:src="@drawable/drill" />
+
+                        <ImageView
+                            android:id="@+id/garden"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::garden}"
+                            android:src="@drawable/garden" />
+
+                        <ImageView
+                            android:id="@+id/smallAppliances"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::smallAppliances}"
+                            android:src="@drawable/kitchen" />
+
+                        <ImageView
+                            android:id="@+id/largeAppliances"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::largeAppliances}"
+                            android:src="@drawable/largeappliance" />
+
+                        <ImageView
+                            android:id="@+id/outDoorPowerEquipment"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::outsideTools}"
+                            android:src="@drawable/lawnmower" />
+
+                        <ImageView
+                            android:id="@+id/vacuums"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::vacuum}"
+                            android:src="@drawable/vacuums" />
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <TextView
+                    android:id="@+id/sportingGoods"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/homeAndGardenScrollView"
+                    android:layout_marginLeft="25dp"
+                    android:fontFamily="@font/abril_fatface"
+                    android:text="Sporting Goods"
+                    android:textColor="@color/colorDark"
+                    android:textSize="26sp"
+                    android:textStyle="italic" />
+
+                <HorizontalScrollView
+                    android:id="@+id/entertainmentScrollView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/sportingGoods"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="20dp">
+
+                    <LinearLayout
+                        android:id="@+id/linear5_category_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/outsideSports"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:onClick="@{clickHandler::outdoorSports}"
+                            android:src="@drawable/arch" />
+
+                        <ImageView
+                            android:id="@+id/teamSports"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/ball"
+                            android:onClick="@{clickHandler::teamSports}"/>
+
+                        <ImageView
+                            android:id="@+id/cycling"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/bike"
+                            android:onClick="@{clickHandler::cycling}"/>
+
+                        <ImageView
+                            android:id="@+id/indoorSports"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/billiard"
+                            android:onClick="@{clickHandler::inDoorSports}"/>
+
+                        <ImageView
+                            android:id="@+id/fishing"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/fishing"
+                            android:onClick="@{clickHandler::fishing}"/>
+
+                        <ImageView
+                            android:id="@+id/golf"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/golf"
+                            android:onClick="@{clickHandler::golf}"/>
+
+                        <ImageView
+                            android:id="@+id/hunting"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/gun"
+                            android:onClick="@{clickHandler::hunting}"/>
+
+                        <ImageView
+                            android:id="@+id/waterSports"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/kayak"
+                            android:onClick="@{clickHandler::waterSports}"/>
+
+                        <ImageView
+                            android:id="@+id/runningYogaFitness"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/yoga"
+                            android:onClick="@{clickHandler::fitnessYoga}"/>
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </RelativeLayout>
+        </ScrollView>
+    </RelativeLayout>
+</layout>

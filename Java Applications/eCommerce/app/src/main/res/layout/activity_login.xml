@@ -2,7 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
     <data>
         <variable
             name="clickHandler"
@@ -59,6 +58,7 @@
         android:textColorHint="@android:color/white"
         android:textSize="17sp"
         android:text="@={user.phoneNumber}"
+        android:maxLength="10"
         />
     <EditText
         android:id="@+id/login_password_input"
@@ -136,6 +136,7 @@
         android:textSize="16sp"
         android:layout_marginStart="80dp"
         android:layout_marginEnd="23dp"
+        android:onClick="@{clickHandler::adminLink}"
         />
     <TextView
         android:id="@+id/not_admin_panel_link"
@@ -148,6 +149,8 @@
         android:textSize="16sp"
         android:layout_marginLeft="80dp"
         android:layout_marginStart="23dp"
+        android:visibility="invisible"
+        android:onClick="@{clickHandler::notAdminLink}"
         />
 
 </RelativeLayout>

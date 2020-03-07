@@ -8,10 +8,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.telephony.PhoneNumberUtils;
 import android.view.View;
+import com.rey.material.widget.CheckBox;
 import android.widget.Toast;
 
+import com.example.ecommerce.Prevalent.Prevalent;
 import com.example.ecommerce.databinding.ActivityLoginBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,31 +21,46 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import io.paperdb.Paper;
+
 public class LoginActivity extends AppCompatActivity {
     // data binding
-    ActivityLoginBinding mainBinding;
+    ActivityLoginBinding loginBinding;
 
     // vars
     private ClickHandler clickHandler;
     public User user;
     private ProgressDialog loadingBar;
     private String parentDbName = "Users";
+    private CheckBox checkBoxRememberMe;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        loginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         loadingBar = new ProgressDialog(this);
 
         // bind user
         user = new User();
-        mainBinding.setUser(user);
+        loginBinding.setUser(user);
 
         // bind clickHandler
         clickHandler = new ClickHandler(this);
-        mainBinding.setClickHandler(clickHandler);
+        loginBinding.setClickHandler(clickHandler);
 
-
+        // rememberMe checkBox
+        checkBoxRememberMe = (CheckBox) findViewById(R.id.remember_me);
+        Paper.init(this);
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
+    }
+    public void phoneNumberFormat(String phoneNumber){
+        PhoneNumberUtils.formatNumber(phoneNumber);
     }
 
     public class ClickHandler {
@@ -53,6 +70,19 @@ public class LoginActivity extends AppCompatActivity {
             this.context = context;
         }
 
+        public void adminLink(View view){
+            loginBinding.mainLoginButton.setText("Login Admin");
+            loginBinding.adminPanelLink.setVisibility(View.INVISIBLE);
+            loginBinding.notAdminPanelLink.setVisibility(View.VISIBLE);
+            parentDbName = "Admins";
+        }
+        public void notAdminLink(View view){
+            loginBinding.mainLoginButton.setText("Login");
+            loginBinding.adminPanelLink.setVisibility(View.VISIBLE);
+            loginBinding.notAdminPanelLink.setVisibility(View.INVISIBLE);
+            parentDbName = "Users";
+        }
+
         public void loginButtonClick(View view) {
             loginUser();
 
@@ -60,10 +90,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser() {
-        if (mainBinding.getUser().getPhoneNumber() == null || mainBinding.getUser().getPhoneNumber().isEmpty()) {
+        if (user.getPhoneNumber() == null || loginBinding.getUser().getPhoneNumber().isEmpty()) {
             Toast.makeText(this, "Please enter your phone number ....", Toast.LENGTH_SHORT).show();
-        } else if (user.getPassword() == null || mainBinding.getUser().getPassword().isEmpty()) {
+        } else if (user.getPassword() == null || loginBinding.getUser().getPassword().isEmpty()) {
             Toast.makeText(this, "Please enter your password ....", Toast.LENGTH_SHORT).show();
+        } else if (user.getPhoneNumber().length() < 10) {
+            Toast.makeText(this, "Your phone number does not have enough digits", Toast.LENGTH_SHORT).show();
         } else {
             String password = user.getPassword();
             String phoneNumber = user.getPhoneNumber();
@@ -76,6 +108,13 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     public void AllowAccessToAccount(String phoneNumber,String password){
+        if(checkBoxRememberMe.isChecked()){
+            Paper.book().write(Prevalent.UserPhoneKey,phoneNumber);
+            Paper.book().write(Prevalent.UserPasswordKey,password);
+            Paper.book().write(Prevalent.UserAccountType,parentDbName);
+
+        }
+
         final DatabaseReference RootRef = FirebaseDatabase.getInstance().getReference();
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -84,19 +123,26 @@ public class LoginActivity extends AppCompatActivity {
                     User userData = dataSnapshot.child(parentDbName).child(phoneNumber).getValue(User.class);
                     if (userData.getPhoneNumber().equals(phoneNumber)){
                         if (userData.getPassword().equals(password)){
-                            Toast.makeText(LoginActivity.this,"Logged in Successfully...",Toast.LENGTH_SHORT).show();
-                            loadingBar.dismiss();
-                            Log.d("!@!","!@!");
-                            Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
-                            startActivity(intent);
+                           if(parentDbName.equals("Admins")){
+                               Toast.makeText(LoginActivity.this,"Welcome Admin, you are currently being logged in",Toast.LENGTH_SHORT).show();
+                               loadingBar.dismiss();
+                               Intent intent = new Intent(LoginActivity.this,AdminCategoryActivity.class);
+                               startActivity(intent);
+                           }
+                           else if (parentDbName.equals("Users")){
+                               Toast.makeText(LoginActivity.this,"Welcome, you are currently being logged in",Toast.LENGTH_SHORT).show();
+                               loadingBar.dismiss();
+                               Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                               startActivity(intent);
+                           }
                         }
                         else {
-                            Toast.makeText(LoginActivity.this,"Wrong Password",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this,"Incorrect Password, please try again",Toast.LENGTH_SHORT).show();
                             loadingBar.dismiss();
                         }
                     }
                 }else {
-                    Toast.makeText(LoginActivity.this,"Account with this " + phoneNumber + " phone number do not exist",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this,"Account with this phone number: " + phoneNumber + " does not exist",Toast.LENGTH_SHORT).show();
                     loadingBar.dismiss();
                 }
             }

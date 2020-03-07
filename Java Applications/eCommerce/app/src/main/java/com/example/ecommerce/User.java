@@ -39,7 +39,7 @@ public class User extends BaseObservable {
 
     public User(String name, String password, String phoneNumber) {
         this.name = name;
-        Password = password;
+        this.Password = password;
         this.phoneNumber = phoneNumber;
     }
 

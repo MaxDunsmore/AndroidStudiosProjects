@@ -4,4 +4,8 @@ import com.example.ecommerce.User;
 
 public class Prevalent {
     private static User currentUserOnline;
+    public static final String UserPhoneKey = "UserPhone";
+    public static final String UserPasswordKey = "UserPassword";
+    public static final String UserAccountType = "Users";
+
 }
