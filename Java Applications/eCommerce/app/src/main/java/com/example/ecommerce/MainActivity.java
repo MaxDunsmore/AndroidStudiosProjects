@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                             if(parentDbName.equals("Users")){
                                 Toast.makeText(MainActivity.this,"Welcome, Logged in Successfully",Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+                                Prevalent.currentUserOnline = userData;
                                 startActivity(intent);
                             }else if(parentDbName.equals("Admins")){
                                 Toast.makeText(MainActivity.this,"Welcome Admin, Logged in Successfully",Toast.LENGTH_SHORT).show();
