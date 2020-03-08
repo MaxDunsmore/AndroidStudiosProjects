@@ -107,7 +107,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
         loadingBar.show();
         Calendar calendar = Calendar.getInstance();
         saveCurrentDate = calendar.getTime().toString();
-        productRandomKey = activityAdminAddNewProductBinding.productName.getText().toString() + " " + saveCurrentDate;
+        productRandomKey = saveCurrentDate;
         final StorageReference filePath = productImagesRef.child(imageUri.getLastPathSegment() + productRandomKey + ".jpg");
         final UploadTask uploadTask = filePath.putFile(imageUri);
         uploadTask.addOnFailureListener(new OnFailureListener() {

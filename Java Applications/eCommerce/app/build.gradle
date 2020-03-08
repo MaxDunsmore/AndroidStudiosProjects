@@ -39,6 +39,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:17.2.2'
     implementation 'com.google.firebase:firebase-database:19.2.1'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
+    implementation 'com.firebaseui:firebase-ui-database:6.2.0'
 
     // implement rey for animations / CardView
     implementation 'com.github.rey5137:material:1.2.5'

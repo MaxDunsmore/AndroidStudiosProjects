@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                             }else if(parentDbName.equals("Admins")){
                                 Toast.makeText(MainActivity.this,"Welcome Admin, Logged in Successfully",Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(MainActivity.this,AdminCategoryActivity.class);
+                                Prevalent.currentUserOnline = userData;
                                 startActivity(intent);
                             }
                         }
