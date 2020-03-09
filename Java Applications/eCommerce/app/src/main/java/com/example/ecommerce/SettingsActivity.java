@@ -33,6 +33,8 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.HashMap;
 
+import io.paperdb.Paper;
+
 
 public class SettingsActivity extends AppCompatActivity {
     ActivitySettingsBinding activitySettingsBinding;
@@ -122,10 +124,18 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         public void saveButton(View view) {
-            if (checker.equals("clicked")) {
-                userInfoSaved();
-            } else {
-                updateOnlyUserInfo();
+
+            if (activitySettingsBinding.settingsPhoneNumber.getText().length() < 10){
+                Toast.makeText(context, "Phone number incomplete", Toast.LENGTH_SHORT).show();
+            }else if(activitySettingsBinding.settingsPassword.getText().length() < 1) {//change to higher number
+                Toast.makeText(context, "Password needs at least 6 digits", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                if (checker.equals("clicked")) {
+                    userInfoSaved();
+                } else {
+                    updateOnlyUserInfo();
+                }
             }
         }
     }
@@ -143,12 +153,13 @@ public class SettingsActivity extends AppCompatActivity {
         userMap.put("phoneNumber", activitySettingsBinding.settingsPhoneNumber.getText().toString());
         userMap.put("password", activitySettingsBinding.settingsPassword.getText().toString());
         userMap.put("image", imageUriStore);
+        Paper.book().write(Prevalent.UserPhoneKey,activitySettingsBinding.settingsPhoneNumber.getText().toString());
+        Paper.book().write(Prevalent.UserPasswordKey,activitySettingsBinding.settingsPassword.getText().toString());
+
+        Prevalent.currentUserOnline.setName(activitySettingsBinding.settingsFullName.getText().toString());
+
         ref.child(activitySettingsBinding.settingsPhoneNumber.getText().toString()).updateChildren(userMap);
-
-
-
-
-
+        Prevalent.currentUserOnline.setPhoneNumber(activitySettingsBinding.settingsPhoneNumber.getText().toString());
         startActivity(new Intent(SettingsActivity.this, HomeActivity.class));
         Toast.makeText(SettingsActivity.this, "Profile Information successfully updated", Toast.LENGTH_SHORT).show();
         finish();
@@ -219,6 +230,11 @@ public class SettingsActivity extends AppCompatActivity {
                                 userMap.put("password", activitySettingsBinding.settingsPassword.getText().toString());
                                 userMap.put("image", myUrl);
                                 ref.child(activitySettingsBinding.settingsPhoneNumber.getText().toString()).updateChildren(userMap);
+                                Prevalent.currentUserOnline.setName(activitySettingsBinding.settingsFullName.getText().toString());
+
+                               
+                                Prevalent.currentUserOnline.setImage(myUrl);
+                                Prevalent.currentUserOnline.setPhoneNumber(activitySettingsBinding.settingsPhoneNumber.getText().toString());
 
                                 progressDialog.dismiss();
                                 startActivity(new Intent(SettingsActivity.this, HomeActivity.class));

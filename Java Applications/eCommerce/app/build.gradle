@@ -59,6 +59,9 @@ dependencies {
     //image
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
 
+    // button counter
+    implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     implementation 'androidx.databinding:databinding-compiler-common:3.6.1'

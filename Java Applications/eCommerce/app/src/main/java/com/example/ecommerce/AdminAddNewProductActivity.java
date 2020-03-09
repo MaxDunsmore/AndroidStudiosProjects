@@ -39,7 +39,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
 
     private static final int GalleryPick = 1;
     private Uri imageUri;
-    private String description, price, productName, saveCurrentDate, saveCurrentTime;
+    private String description, price, productName, saveCurrentDate, descriptionLong, saveCurrentTime;
     private String productRandomKey, downloadImageUrl;
     private StorageReference productImagesRef;
     private DatabaseReference productsRef;
@@ -83,6 +83,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
         description = activityAdminAddNewProductBinding.productDescription.getText().toString();
         price = activityAdminAddNewProductBinding.productPrice.getText().toString();
         productName = activityAdminAddNewProductBinding.productName.getText().toString();
+        descriptionLong = activityAdminAddNewProductBinding.productDescriptionLong.getText().toString();
 
         if(imageUri == null){
             Toast.makeText(this,"Please upload a product image...",Toast.LENGTH_SHORT).show();
@@ -168,6 +169,9 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
         productMap.put("date",saveCurrentDate);
         productMap.put("time",saveCurrentTime);
         productMap.put("description", description);
+        //add long description code
+        productMap.put("descriptionLong", descriptionLong);
+
         productMap.put("image",downloadImageUrl);
         productMap.put("category",categoryName);
         productMap.put("price", price);

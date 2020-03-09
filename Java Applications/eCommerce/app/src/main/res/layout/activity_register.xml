@@ -58,7 +58,7 @@
         android:textColorHint="@android:color/white"
         android:textSize="17sp"
         android:text="@={user.phoneNumber}"
-        android:maxLines="10"
+        android:maxLength="10"
         />
     <EditText
         android:id="@+id/register_username_input"

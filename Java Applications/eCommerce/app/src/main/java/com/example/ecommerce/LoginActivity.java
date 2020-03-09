@@ -59,9 +59,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         super.onBackPressed();
     }
-    public void phoneNumberFormat(String phoneNumber){
-        PhoneNumberUtils.formatNumber(phoneNumber);
-    }
 
     public class ClickHandler {
         private Context context;

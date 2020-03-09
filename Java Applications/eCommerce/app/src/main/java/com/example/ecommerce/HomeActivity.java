@@ -1,6 +1,7 @@
 package com.example.ecommerce;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -62,8 +63,8 @@ public class HomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(HomeActivity.this,CartActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -113,6 +114,15 @@ public class HomeActivity extends AppCompatActivity
                         holder.txtProductName.setText(model.getPname());
                         holder.txtProductDescription.setText(model.getDescription());
                         holder.txtProductPrice.setText("$" + model.getPrice());
+                        holder.imageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(HomeActivity.this,ProductDetailsActivity.class );
+                                intent.putExtra("pid",model.getPid());
+                                startActivity(intent);
+
+                            }
+                        });
                         Picasso.get().load(model.getImage()).into(holder.imageView);
                     }
 
@@ -174,7 +184,8 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_cart)
         {
-
+            Intent intent = new Intent(HomeActivity.this,CartActivity.class);
+            startActivity(intent);
         }
         else if (id == R.id.nav_orders)
         {

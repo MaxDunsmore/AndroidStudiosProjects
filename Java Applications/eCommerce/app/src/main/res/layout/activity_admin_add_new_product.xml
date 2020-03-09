@@ -12,6 +12,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AdminCategoryActivity">
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/select_product_image"
@@ -35,6 +41,7 @@
         android:hint="Product Name..."
         android:layout_marginLeft="50dp"
         android:layout_marginRight="45dp"
+        android:maxLines="1"
         android:background="@drawable/input_design"
         />
     <EditText
@@ -45,7 +52,21 @@
         android:inputType="textMultiLine"
         android:layout_marginTop="6dp"
         android:padding="20dp"
-        android:hint="Product Description..."
+        android:hint="Product Short Description..."
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="45dp"
+        android:maxLines="3"
+        android:background="@drawable/input_design"
+        />
+    <EditText
+        android:id="@+id/product_description_long"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/product_description"
+        android:inputType="textMultiLine"
+        android:layout_marginTop="6dp"
+        android:padding="20dp"
+        android:hint="Product Long Description..."
         android:layout_marginLeft="50dp"
         android:layout_marginRight="45dp"
         android:background="@drawable/input_design"
@@ -54,7 +75,7 @@
         android:id="@+id/product_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/product_description"
+        android:layout_below="@id/product_description_long"
         android:inputType="textMultiLine"
         android:layout_marginTop="6dp"
         android:padding="20dp"
@@ -62,6 +83,7 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="45dp"
         android:background="@drawable/input_design"
+        android:maxLines="1"
         />
     <Button
         android:id="@+id/add_new_product"
@@ -80,7 +102,7 @@
         android:onClick="@{clickHandler::addProductButtonClick}"
         />
 
-
-
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
 </layout>
