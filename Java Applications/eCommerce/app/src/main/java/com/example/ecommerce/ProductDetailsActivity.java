@@ -1,6 +1,7 @@
 package com.example.ecommerce;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -34,8 +35,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     public boolean descriptionStatus = false; // true = displayed
     public ClickHandler clickHandler;
     private String productID = "";
-    private String description, price, productName, saveCurrentDate, descriptionLong;
-    String toastMessage;
+    private String saveCurrentDate;
     Toast toast;
 
     @Override
@@ -49,49 +49,48 @@ public class ProductDetailsActivity extends AppCompatActivity {
         activityProductDetailsBinding.setClickHandler(clickHandler);
 
         getProductDetails();
-        activityProductDetailsBinding.numberButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
-            @Override
-            public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
-                Calendar calendar = Calendar.getInstance();
-                saveCurrentDate = calendar.getTime().toString();
+        activityProductDetailsBinding.numberButton.setOnValueChangeListener((view, oldValue, newValue) -> {
+            Calendar calendar = Calendar.getInstance();
+            saveCurrentDate = calendar.getTime().toString();
 
 
-                final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
-                final HashMap<String, Object> cartMap = new HashMap<>();
-                cartMap.put("pid", productID);
-                cartMap.put("pname", activityProductDetailsBinding.productNameDetails.getText().toString());
-                cartMap.put("price", activityProductDetailsBinding.productPriceDetails.getText().toString());
-                cartMap.put("date", saveCurrentDate);
-                cartMap.put("quantity", activityProductDetailsBinding.numberButton.getNumber());
-                cartMap.put("discount", "");
-                cartListRef.child("User View").child(Prevalent.currentUserOnline.getPhoneNumber()).child("Products").child(productID)
-                        .updateChildren(cartMap)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    cartListRef.child("Admin View").child(Prevalent.currentUserOnline.getPhoneNumber()).child("Products").child(productID)
-                                            .updateChildren(cartMap)
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        if (newValue == 0){
-                                                            displayToastMessage("Your cart is empty");
-                                                        }else if(newValue < oldValue){
-                                                        ;
-                                                            displayToastMessage("Item removed from cart");
-                                                        }else if(newValue > oldValue){
-                                                            displayToastMessage("Item added to card");
-                                                        }
-
-                                                    }
+            final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
+            final HashMap<String, Object> cartMap = new HashMap<>();
+            cartMap.put("pid", productID);
+            cartMap.put("pname", activityProductDetailsBinding.productNameDetails.getText().toString());
+            cartMap.put("price", activityProductDetailsBinding.productPriceDetails.getText().toString());
+            cartMap.put("date", saveCurrentDate);
+            cartMap.put("quantity", activityProductDetailsBinding.numberButton.getNumber());
+            cartMap.put("discount", "");
+            cartListRef.child("User View").child(Prevalent.currentUserOnline.getPhoneNumber()).child("Products").child(productID)
+                    .updateChildren(cartMap)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            cartListRef.child("Admin View").child(Prevalent.currentUserOnline.getPhoneNumber()).child("Products").child(productID)
+                                    .updateChildren(cartMap)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                if (newValue == 0){
+                                                    displayToastMessage("Item no longer in cart");
+                                                    cartListRef.child("User View")
+                                                            .child(Prevalent.currentUserOnline.getPhoneNumber())
+                                                            .child("Products")
+                                                            .child(productID)
+                                                            .removeValue();
+                                                }else if(newValue < oldValue){
+                                                ;
+                                                    displayToastMessage("Item removed from cart");
+                                                }else if(newValue > oldValue){
+                                                    displayToastMessage("Item added to card");
                                                 }
-                                            });
-                                }
-                            }
-                        });
-            }
+
+                                            }
+                                        }
+                                    });
+                        }
+                    });
         });
 
     }
@@ -146,57 +145,21 @@ public class ProductDetailsActivity extends AppCompatActivity {
         public void numberButtonCLicked(View view) {
 
         }
-
-        public void counterClicked(View view) {
-            // move this location to more efficient place, dont add to database until cart button confirmation
-            Toast.makeText(ProductDetailsActivity.this, "YAY", Toast.LENGTH_SHORT).show();
-
-            Calendar calendar = Calendar.getInstance();
-            saveCurrentDate = calendar.getTime().toString();
-
-            final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
-            final HashMap<String, Object> cartMap = new HashMap<>();
-            cartMap.put("pid", productID);
-            cartMap.put("pname", activityProductDetailsBinding.productNameDetails.getText().toString());
-            cartMap.put("price", activityProductDetailsBinding.productPriceDetails.getText().toString());
-            cartMap.put("date", saveCurrentDate);
-            cartMap.put("quantity", activityProductDetailsBinding.numberButton.getNumber());
-            cartMap.put("discount", "");
-            cartListRef.child("User View").child(Prevalent.currentUserOnline.getPhoneNumber()).child("Products").child(productID)
-                    .updateChildren(cartMap)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                cartListRef.child("Admin View").child(Prevalent.currentUserOnline.getPhoneNumber()).child("Products").child(productID)
-                                        .updateChildren(cartMap)
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Toast.makeText(ProductDetailsActivity.this, "Added to Cart List.", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                        });
-                            }
-                        }
-                    });
-
-
+        public void cartClicked(View view){
+            Intent intent = new Intent(ProductDetailsActivity.this,CartActivity.class);
+            startActivity(intent);
         }
 
         public void displayFullDescription(View view) {
             if (!descriptionStatus) {
                 activityProductDetailsBinding.longDescriptionProductDetails.setText("Hide description");
                 activityProductDetailsBinding.longDescriptionProductDetailsText.setVisibility(View.VISIBLE);
-                activityProductDetailsBinding.longDescriptionProductDetails.setBackgroundResource(R.drawable.buttonarrowup);
-
+                activityProductDetailsBinding.longDescriptionProductDetails.setBackgroundResource(R.drawable.backgroundbuttonup);
                 descriptionStatus = true;
-                // change image background to arrow opposite way
             } else if (descriptionStatus) {
                 activityProductDetailsBinding.longDescriptionProductDetails.setText("Product description");
                 activityProductDetailsBinding.longDescriptionProductDetailsText.setVisibility(View.INVISIBLE);
-                activityProductDetailsBinding.longDescriptionProductDetails.setBackgroundResource(R.drawable.buttonarrowdown);
+                activityProductDetailsBinding.longDescriptionProductDetails.setBackgroundResource(R.drawable.backgroundbuttondown);
 
                 descriptionStatus = false;
             }

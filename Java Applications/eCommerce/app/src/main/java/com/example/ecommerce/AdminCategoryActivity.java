@@ -18,8 +18,6 @@ public class AdminCategoryActivity extends AppCompatActivity {
 
     // vars
     private ClickHandler clickHandler;
-    final String parentDbName = "Users";
-    private ProgressDialog loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

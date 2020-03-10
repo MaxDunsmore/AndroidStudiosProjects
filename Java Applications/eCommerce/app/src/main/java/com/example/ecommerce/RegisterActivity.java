@@ -1,9 +1,5 @@
 package com.example.ecommerce;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,10 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import com.example.ecommerce.databinding.ActivityRegisterBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,8 +25,6 @@ public class RegisterActivity extends AppCompatActivity {
     // data binding
     ActivityRegisterBinding activityRegisterBinding;
 
-    // vars
-    private ClickHandler clickHandler;
     private User user;
     private ProgressDialog loadingBar;
 
@@ -42,7 +37,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         user = new User();
         activityRegisterBinding.setUser(user);
-        clickHandler = new ClickHandler(this);
+        // vars
+        ClickHandler clickHandler = new ClickHandler(this);
         activityRegisterBinding.setClickHandler(clickHandler);
 
     }
@@ -66,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Please enter your phone number ....", Toast.LENGTH_SHORT).show();
         } else if (user.getPassword() == null || activityRegisterBinding.getUser().getPassword().isEmpty()) {
             Toast.makeText(this, "Please enter your password ....", Toast.LENGTH_SHORT).show();
-        }else if (user.getPhoneNumber().length() < 10) {
+        } else if (user.getPhoneNumber().length() < 10) {
             Toast.makeText(this, "Please enter your phone number ....", Toast.LENGTH_SHORT).show();
         } else {
             String name = user.getName();
@@ -79,6 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
             ValidatePhoneNumber(name, password, phoneNumber);
         }
     }
+
     private void ValidatePhoneNumber(final String name, final String password, final String phoneNumber) {
         final DatabaseReference RootRef = FirebaseDatabase.getInstance().getReference();
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -90,19 +87,15 @@ public class RegisterActivity extends AppCompatActivity {
                     userdatamap.put("password", password);
                     userdatamap.put("name", name);
                     RootRef.child("Users").child(phoneNumber).updateChildren(userdatamap)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(RegisterActivity.this, "Congratulations, your account has been made", Toast.LENGTH_SHORT).show();
-                                        loadingBar.dismiss();
-                                        Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
-                                        startActivity(intent);
-                                    }
-                                    else {
-                                        loadingBar.dismiss();
-                                        Toast.makeText(RegisterActivity.this,"Network Error: Please Try Again...",Toast.LENGTH_SHORT).show();
-                                    }
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(RegisterActivity.this, "Congratulations, your account has been made", Toast.LENGTH_SHORT).show();
+                                    loadingBar.dismiss();
+                                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    loadingBar.dismiss();
+                                    Toast.makeText(RegisterActivity.this, "Network Error: Please Try Again...", Toast.LENGTH_SHORT).show();
                                 }
                             });
                 } else {
@@ -111,6 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Please try again using another phone number", Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

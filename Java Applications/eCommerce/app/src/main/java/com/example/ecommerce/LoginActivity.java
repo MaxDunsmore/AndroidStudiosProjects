@@ -27,8 +27,6 @@ public class LoginActivity extends AppCompatActivity {
     // data binding
     ActivityLoginBinding loginBinding;
 
-    // vars
-    private ClickHandler clickHandler;
     public User user;
     private ProgressDialog loadingBar;
     private String parentDbName = "Users";
@@ -46,7 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         loginBinding.setUser(user);
 
         // bind clickHandler
-        clickHandler = new ClickHandler(this);
+        // vars
+        ClickHandler clickHandler = new ClickHandler(this);
         loginBinding.setClickHandler(clickHandler);
 
         // rememberMe checkBox

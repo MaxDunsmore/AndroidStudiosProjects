@@ -11,8 +11,6 @@ public class User extends BaseObservable {
 
     }
 
-
-
     private String name;
 
     public User(String name, String password, String phoneNumber, String image, String address) {

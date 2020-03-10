@@ -20,7 +20,7 @@
             android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/select_product_image"
+        android:id="@+id/image_select_product_new"
         android:layout_width="350dp"
         android:layout_height="200dp"
         android:cropToPadding="false"
@@ -31,10 +31,10 @@
         android:onClick="@{clickHandler::inputProductImage}"
         />
     <EditText
-        android:id="@+id/product_name"
+        android:id="@+id/edit_text_name_new_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/select_product_image"
+        android:layout_below="@id/image_select_product_new"
         android:inputType="textMultiLine"
         android:layout_marginTop="20dp"
         android:padding="20dp"
@@ -45,10 +45,10 @@
         android:background="@drawable/input_design"
         />
     <EditText
-        android:id="@+id/product_description"
+        android:id="@+id/edit_text_description_new"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/product_name"
+        android:layout_below="@id/edit_text_name_new_product"
         android:inputType="textMultiLine"
         android:layout_marginTop="6dp"
         android:padding="20dp"
@@ -59,10 +59,10 @@
         android:background="@drawable/input_design"
         />
     <EditText
-        android:id="@+id/product_description_long"
+        android:id="@+id/edit_text_description_long_new"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/product_description"
+        android:layout_below="@id/edit_text_description_new"
         android:inputType="textMultiLine"
         android:layout_marginTop="6dp"
         android:padding="20dp"
@@ -72,10 +72,10 @@
         android:background="@drawable/input_design"
         />
     <EditText
-        android:id="@+id/product_price"
+        android:id="@+id/edit_text_price_new"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/product_description_long"
+        android:layout_below="@id/edit_text_description_long_new"
         android:inputType="textMultiLine"
         android:layout_marginTop="6dp"
         android:padding="20dp"
@@ -86,10 +86,10 @@
         android:maxLines="1"
         />
     <Button
-        android:id="@+id/add_new_product"
+        android:id="@+id/button_add_product_new"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/product_price"
+        android:layout_below="@id/edit_text_price_new"
         android:text="Add product"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="45dp"

@@ -173,7 +173,7 @@ public class SettingsActivity extends AppCompatActivity {
             imageUri = result.getUri();
             activitySettingsBinding.settingsProfileImage.setImageURI(imageUri);
         } else if (TextUtils.isEmpty(activitySettingsBinding.settingsAddress.getText().toString())) {
-            Toast.makeText(this, "Error, Try again", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "Error, Try again", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(SettingsActivity.this, SettingsActivity.class));
             finish();
         }
@@ -207,43 +207,40 @@ public class SettingsActivity extends AppCompatActivity {
                     return fileRef.getDownloadUrl();
                 }
             })
-                    .addOnCompleteListener(new OnCompleteListener<Uri>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Uri> task) {
-                            if (task.isSuccessful()) {
-                        /*
-                        add code to delete entry if phone number is changed and re add to firebase
-                         */
+                    .addOnCompleteListener((OnCompleteListener<Uri>) task -> {
+                        if (task.isSuccessful()) {
+                    /*
+                    add code to delete entry if phone number is changed and re add to firebase
+                     */
 
-                                Uri downloadUrl = task.getResult();
-                                myUrl = downloadUrl.toString();
-                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users");
+                            Uri downloadUrl = task.getResult();
+                            myUrl = downloadUrl.toString();
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users");
 
-                                if (!activitySettingsBinding.settingsPhoneNumber.getText().toString().equals(phoneNumberCheck)) {
-                                    ref.child(Prevalent.currentUserOnline.getPhoneNumber()).removeValue();
-                                }
-
-                                HashMap<String, Object> userMap = new HashMap<>();
-                                userMap.put("name", activitySettingsBinding.settingsFullName.getText().toString());
-                                userMap.put("address", activitySettingsBinding.settingsAddress.getText().toString());
-                                userMap.put("phoneNumber", activitySettingsBinding.settingsPhoneNumber.getText().toString());
-                                userMap.put("password", activitySettingsBinding.settingsPassword.getText().toString());
-                                userMap.put("image", myUrl);
-                                ref.child(activitySettingsBinding.settingsPhoneNumber.getText().toString()).updateChildren(userMap);
-                                Prevalent.currentUserOnline.setName(activitySettingsBinding.settingsFullName.getText().toString());
-
-                               
-                                Prevalent.currentUserOnline.setImage(myUrl);
-                                Prevalent.currentUserOnline.setPhoneNumber(activitySettingsBinding.settingsPhoneNumber.getText().toString());
-
-                                progressDialog.dismiss();
-                                startActivity(new Intent(SettingsActivity.this, HomeActivity.class));
-                                Toast.makeText(SettingsActivity.this, "Profile Information successfully updated", Toast.LENGTH_SHORT).show();
-                                finish();
-                            } else {
-                                progressDialog.dismiss();
-                                Toast.makeText(SettingsActivity.this, "Error.", Toast.LENGTH_SHORT).show();
+                            if (!activitySettingsBinding.settingsPhoneNumber.getText().toString().equals(phoneNumberCheck)) {
+                                ref.child(Prevalent.currentUserOnline.getPhoneNumber()).removeValue();
                             }
+
+                            HashMap<String, Object> userMap = new HashMap<>();
+                            userMap.put("name", activitySettingsBinding.settingsFullName.getText().toString());
+                            userMap.put("address", activitySettingsBinding.settingsAddress.getText().toString());
+                            userMap.put("phoneNumber", activitySettingsBinding.settingsPhoneNumber.getText().toString());
+                            userMap.put("password", activitySettingsBinding.settingsPassword.getText().toString());
+                            userMap.put("image", myUrl);
+                            ref.child(activitySettingsBinding.settingsPhoneNumber.getText().toString()).updateChildren(userMap);
+                            Prevalent.currentUserOnline.setName(activitySettingsBinding.settingsFullName.getText().toString());
+
+
+                            Prevalent.currentUserOnline.setImage(myUrl);
+                            Prevalent.currentUserOnline.setPhoneNumber(activitySettingsBinding.settingsPhoneNumber.getText().toString());
+
+                            progressDialog.dismiss();
+                            startActivity(new Intent(SettingsActivity.this, HomeActivity.class));
+                            Toast.makeText(SettingsActivity.this, "Profile Information successfully updated", Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            progressDialog.dismiss();
+                            Toast.makeText(SettingsActivity.this, "Error.", Toast.LENGTH_SHORT).show();
                         }
                     });
         } else {

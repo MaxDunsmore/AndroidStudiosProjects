@@ -30,16 +30,15 @@ import java.util.HashMap;
 
 public class AdminAddNewProductActivity extends AppCompatActivity {
     ActivityAdminAddNewProductBinding activityAdminAddNewProductBinding;
-    String categoryName;
+    String categoryName="";
     Intent intent;
 
     private ClickHandler clickHandler;
-    final String parentDbName = "Users";
     private ProgressDialog loadingBar;
 
     private static final int GalleryPick = 1;
     private Uri imageUri;
-    private String description, price, productName, saveCurrentDate, descriptionLong, saveCurrentTime;
+    private String description, price, productName, saveCurrentDate, descriptionLong;
     private String productRandomKey, downloadImageUrl;
     private StorageReference productImagesRef;
     private DatabaseReference productsRef;
@@ -80,10 +79,10 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
     }
 
     private void ValidateProductData() {
-        description = activityAdminAddNewProductBinding.productDescription.getText().toString();
-        price = activityAdminAddNewProductBinding.productPrice.getText().toString();
-        productName = activityAdminAddNewProductBinding.productName.getText().toString();
-        descriptionLong = activityAdminAddNewProductBinding.productDescriptionLong.getText().toString();
+        description = activityAdminAddNewProductBinding.editTextDescriptionNew.getText().toString();
+        price = activityAdminAddNewProductBinding.editTextNameNewProduct.getText().toString();
+        productName = activityAdminAddNewProductBinding.editTextNameNewProduct.getText().toString();
+        descriptionLong = activityAdminAddNewProductBinding.editTextDescriptionLongNew.getText().toString();
 
         if(imageUri == null){
             Toast.makeText(this,"Please upload a product image...",Toast.LENGTH_SHORT).show();
@@ -160,14 +159,13 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
 
         if(requestCode == GalleryPick && resultCode == RESULT_OK && data!=null ){
             imageUri = data.getData();
-            activityAdminAddNewProductBinding.selectProductImage.setImageURI(imageUri);
+            activityAdminAddNewProductBinding.imageSelectProductNew.setImageURI(imageUri);
         }
     }
     private void SaveProductInfoToDatabase(){
         HashMap<String, Object> productMap = new HashMap<>();
         productMap.put("pid",productRandomKey);
         productMap.put("date",saveCurrentDate);
-        productMap.put("time",saveCurrentTime);
         productMap.put("description", description);
         //add long description code
         productMap.put("descriptionLong", descriptionLong);
@@ -178,20 +176,17 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
         productMap.put("pname", productName);
 
         productsRef.child(productRandomKey).updateChildren(productMap)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(AdminAddNewProductActivity.this, "Product Added Successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(AdminAddNewProductActivity.this,AdminCategoryActivity.class);
-                    startActivity(intent);
-                    loadingBar.dismiss();
-                }else {
-                    loadingBar.dismiss();
-                    String message = task.getException().toString();
-                    Toast.makeText(AdminAddNewProductActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        Toast.makeText(AdminAddNewProductActivity.this, "Product Added Successfully", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(AdminAddNewProductActivity.this,AdminCategoryActivity.class);
+                        startActivity(intent);
+                        loadingBar.dismiss();
+                    }else {
+                        loadingBar.dismiss();
+                        String message = task.getException().toString();
+                        Toast.makeText(AdminAddNewProductActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

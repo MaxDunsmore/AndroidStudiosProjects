@@ -15,7 +15,9 @@
 
         <ScrollView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/product_price_details"
+            android:layout_marginBottom="1dp">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -130,7 +132,7 @@
             android:backgroundTint="@android:color/white"
             android:elevation="6dp"
             android:src="@drawable/nav_cart"
-            android:onClick="@{clickHandler::counterClicked}"
+            android:onClick="@{clickHandler::cartClicked}"
             />
     </RelativeLayout>
 </layout>
