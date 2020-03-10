@@ -29,6 +29,8 @@ public class CartActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
+    private double orderTotalPrice = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,16 @@ public class CartActivity extends AppCompatActivity {
         activityCartBinding.cartList.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         activityCartBinding.cartList.setLayoutManager(layoutManager);
+
+        activityCartBinding.nextProcessBtn.setOnClickListener(view -> {
+            Toast.makeText(this, activityCartBinding.totalPrice.getText(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(CartActivity.this, ConfirmFinalOrderActivity.class);
+            intent.putExtra("Total Price", String.valueOf(orderTotalPrice));
+            startActivity(intent);
+            finish();
+        });
+
+
     }
 
     public class ClickHandler {
@@ -78,6 +90,9 @@ public class CartActivity extends AppCompatActivity {
                 holder.textProductQuantity.setText(stringQuantity);
                 holder.textProductPrice.setText(stringPrice);
                 holder.textProductName.setText(stringName);
+                setTotalPrice(model);
+
+
                 holder.itemView.setOnClickListener(view -> {
                     CharSequence options[] = new CharSequence[]{
                             "Edit",
@@ -105,6 +120,13 @@ public class CartActivity extends AppCompatActivity {
                                     .removeValue()
                                     .addOnCompleteListener(task -> {
                                         Toast.makeText(CartActivity.this, "Item removed successfully", Toast.LENGTH_SHORT).show();
+
+                                        String price = model.getPrice();
+                                        double priceInt = Double.parseDouble(price.replaceAll("[^\\d.-]", ""));
+                                        double quantityInt = Double.parseDouble(model.getQuantity());
+                                        double productTotalPrice = priceInt * quantityInt;
+                                        orderTotalPrice = orderTotalPrice - productTotalPrice;
+                                        activityCartBinding.totalPrice.setText("Total Price: $" + orderTotalPrice);
                                     });
                         }
                     });
@@ -123,5 +145,15 @@ public class CartActivity extends AppCompatActivity {
         };
         recyclerView.setAdapter(adapter);
         adapter.startListening();
+    }
+
+    private void setTotalPrice(@NonNull Cart model) {
+        String price = model.getPrice();
+        double priceInt = Double.parseDouble(price.replaceAll("[^\\d.-]", ""));
+        double quantityInt = Double.parseDouble(model.getQuantity());
+
+        double productTotalPrice = priceInt * quantityInt;
+        orderTotalPrice = orderTotalPrice + productTotalPrice;
+        activityCartBinding.totalPrice.setText("Total Price: $" + Double.toString(orderTotalPrice));
     }
 }
