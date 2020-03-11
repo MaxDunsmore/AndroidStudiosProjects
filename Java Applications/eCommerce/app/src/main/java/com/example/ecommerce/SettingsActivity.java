@@ -198,14 +198,11 @@ public class SettingsActivity extends AppCompatActivity {
         if (imageUri != null) {
             final StorageReference fileRef = storageProfilePictureRef.child(Prevalent.currentUserOnline.getPhoneNumber());
             uploadTask = fileRef.putFile(imageUri);
-            uploadTask.continueWithTask(new Continuation() {
-                @Override
-                public Object then(@NonNull Task task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-                    return fileRef.getDownloadUrl();
+            uploadTask.continueWithTask((Continuation) task -> {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
                 }
+                return fileRef.getDownloadUrl();
             })
                     .addOnCompleteListener((OnCompleteListener<Uri>) task -> {
                         if (task.isSuccessful()) {

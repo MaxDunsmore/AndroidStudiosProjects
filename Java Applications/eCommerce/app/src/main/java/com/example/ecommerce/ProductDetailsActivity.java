@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -14,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
-import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.ecommerce.Model.Products;
 import com.example.ecommerce.Prevalent.Prevalent;
 import com.example.ecommerce.databinding.ActivityProductDetailsBinding;
@@ -34,7 +34,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     ActivityProductDetailsBinding activityProductDetailsBinding;
     public boolean descriptionStatus = false; // true = displayed
     public ClickHandler clickHandler;
-    private String productID = "";
+    public String productID = "";
     private String saveCurrentDate;
     Toast toast;
 
@@ -42,13 +42,17 @@ public class ProductDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityProductDetailsBinding = DataBindingUtil.setContentView(this, R.layout.activity_product_details);
-
         productID = getIntent().getStringExtra("pid");
 
         clickHandler = new ClickHandler(this);
         activityProductDetailsBinding.setClickHandler(clickHandler);
 
         getProductDetails();
+        CheckOrderState();
+
+    }
+
+    private void addingToCartList() {
         activityProductDetailsBinding.numberButton.setOnValueChangeListener((view, oldValue, newValue) -> {
             Calendar calendar = Calendar.getInstance();
             saveCurrentDate = calendar.getTime().toString();
@@ -68,31 +72,26 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             cartListRef.child("Admin View").child(Prevalent.currentUserOnline.getPhoneNumber()).child("Products").child(productID)
                                     .updateChildren(cartMap)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                if (newValue == 0){
-                                                    displayToastMessage("Item no longer in cart");
-                                                    cartListRef.child("User View")
-                                                            .child(Prevalent.currentUserOnline.getPhoneNumber())
-                                                            .child("Products")
-                                                            .child(productID)
-                                                            .removeValue();
-                                                }else if(newValue < oldValue){
-                                                ;
-                                                    displayToastMessage("Item removed from cart");
-                                                }else if(newValue > oldValue){
-                                                    displayToastMessage("Item added to card");
-                                                }
-
+                                    .addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful()) {
+                                            if (newValue == 0) {
+                                                displayToastMessage("Item no longer in cart");
+                                                cartListRef.child("User View")
+                                                        .child(Prevalent.currentUserOnline.getPhoneNumber())
+                                                        .child("Products")
+                                                        .child(productID)
+                                                        .removeValue();
+                                            } else if (newValue < oldValue) {
+                                                displayToastMessage("Item removed from cart");
+                                            } else if (newValue > oldValue) {
+                                                displayToastMessage("Item added to card");
                                             }
+
                                         }
                                     });
                         }
                     });
         });
-
     }
 
     private void displayToastMessage(String s) {
@@ -119,6 +118,29 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     Picasso.get().load(products.getImage()).into(activityProductDetailsBinding.productImageDetails);
                 }
             }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void CheckOrderState() {
+        DatabaseReference ordersRef;
+        ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUserOnline.getPhoneNumber());
+        ordersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String shippingState = dataSnapshot.child("state").getValue().toString();
+                    if (shippingState.equals("not shipped") ) {
+                        Toast.makeText(ProductDetailsActivity.this, "You can order more once order is confirmed or shipped", Toast.LENGTH_SHORT).show();
+                    } else {
+                        addingToCartList();
+                    }
+                }else{
+                    addingToCartList();
+                }
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -134,19 +156,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
             this.context = context;
         }
 
-        public void addToCartDetails(View view) {
-
-        }
-
-        public void imageDetailsClicked(View view) {
-
-        }
-
-        public void numberButtonCLicked(View view) {
-
-        }
-        public void cartClicked(View view){
-            Intent intent = new Intent(ProductDetailsActivity.this,CartActivity.class);
+        public void cartClicked(View view) {
+            Intent intent = new Intent(ProductDetailsActivity.this, CartActivity.class);
             startActivity(intent);
         }
 
@@ -154,12 +165,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
             if (!descriptionStatus) {
                 activityProductDetailsBinding.longDescriptionProductDetails.setText("Hide description");
                 activityProductDetailsBinding.longDescriptionProductDetailsText.setVisibility(View.VISIBLE);
-                activityProductDetailsBinding.longDescriptionProductDetails.setBackgroundResource(R.drawable.backgroundbuttonup);
+                activityProductDetailsBinding.imageArrowProductDetails.setImageResource(R.drawable.whitearrowup);
                 descriptionStatus = true;
             } else if (descriptionStatus) {
                 activityProductDetailsBinding.longDescriptionProductDetails.setText("Product description");
                 activityProductDetailsBinding.longDescriptionProductDetailsText.setVisibility(View.INVISIBLE);
-                activityProductDetailsBinding.longDescriptionProductDetails.setBackgroundResource(R.drawable.backgroundbuttondown);
+                activityProductDetailsBinding.imageArrowProductDetails.setImageResource(R.drawable.whitearrowdown);
 
                 descriptionStatus = false;
             }

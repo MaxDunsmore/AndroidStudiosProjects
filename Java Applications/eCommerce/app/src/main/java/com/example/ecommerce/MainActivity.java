@@ -48,9 +48,10 @@ public class MainActivity extends AppCompatActivity {
             this.context = context;
         }
         public void loginButtonClick(View view){
+
             checkRememberBox();
-            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
-            startActivity(intent);
+
+
         }
         public void joinNowButtonClick(View view){
             Intent intent = new Intent(MainActivity.this,RegisterActivity.class);
@@ -67,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
                     loadingBar.setCanceledOnTouchOutside(false);
                     loadingBar.show();
                     AllowAccess(UserPhoneKey,UserPasswordKey);
+                }else{
+                    Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                    startActivity(intent);
                 }
             }
         }

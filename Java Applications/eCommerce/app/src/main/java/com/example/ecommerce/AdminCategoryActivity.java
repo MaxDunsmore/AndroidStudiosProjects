@@ -12,6 +12,8 @@ import android.view.View;
 
 import com.example.ecommerce.databinding.ActivityAdminCategoryBinding;
 
+import io.paperdb.Paper;
+
 public class AdminCategoryActivity extends AppCompatActivity {
     //data binding
     ActivityAdminCategoryBinding activityAdminCategoryBinding;
@@ -23,8 +25,19 @@ public class AdminCategoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityAdminCategoryBinding = DataBindingUtil.setContentView(this,R.layout.activity_admin_category);
-        clickHandler = new ClickHandler(this);
-        activityAdminCategoryBinding.setClickHandler(clickHandler);
+        Paper.init(this);
+
+        activityAdminCategoryBinding.buttonLogoutAdmin.setOnClickListener(v -> {
+            Paper.book().destroy();
+            Intent intent = new Intent(AdminCategoryActivity.this,MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        });
+        activityAdminCategoryBinding.buttonCheckOrdersAdmin.setOnClickListener(view ->{
+            Intent intent = new Intent(AdminCategoryActivity.this,AdminNewOrdersActivity.class);
+            startActivity(intent);
+        });
     }
 
     public class ClickHandler {

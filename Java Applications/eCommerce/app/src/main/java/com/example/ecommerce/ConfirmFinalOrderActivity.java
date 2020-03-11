@@ -24,7 +24,7 @@ import java.util.HashMap;
 public class ConfirmFinalOrderActivity extends AppCompatActivity {
     ActivityConfirmFinalOrderBinding activityConfirmFinalOrderBinding;
     private ClickHandler clickHandler;
-    private String totalAmount;
+    private String totalAmount = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,19 +57,12 @@ public class ConfirmFinalOrderActivity extends AppCompatActivity {
     }
 
     private void ConfirmOrder() {
-
-
-
         final String saveCurrentDate, saveCurrentTime;
-
 //        Calendar calendar = Calendar.getInstance();
 //        saveCurrentDate = calendar.getTime().toString();
-
-
         Calendar calForDate = Calendar.getInstance();
         SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
         saveCurrentDate = currentDate.format(calForDate.getTime());
-
         SimpleDateFormat currentTime = new SimpleDateFormat("h:mm a");
         saveCurrentTime = currentTime.format(calForDate.getTime());
 

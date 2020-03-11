@@ -21,8 +21,11 @@ import com.example.ecommerce.ViewHolder.CartViewHolder;
 import com.example.ecommerce.databinding.ActivityCartBinding;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class CartActivity extends AppCompatActivity {
     ActivityCartBinding activityCartBinding;
@@ -75,6 +78,8 @@ public class CartActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
+
+        CheckOrderState();
         FirebaseRecyclerOptions<Cart> options =
                 new FirebaseRecyclerOptions.Builder<Cart>()
                         .setQuery(cartListRef.child("User View")
@@ -146,6 +151,45 @@ public class CartActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         adapter.startListening();
     }
+
+    private void CheckOrderState(){
+        DatabaseReference ordersRef;
+        ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUserOnline.getPhoneNumber());
+        ordersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    String shippingState = dataSnapshot.child("state").getValue().toString();
+                    String userName = dataSnapshot.child("state").getValue().toString();
+
+                    if(shippingState.equals("shipped")){
+                        activityCartBinding.totalPrice.setText("Dear " + userName + "\n order is shipped successfully");
+                        recyclerView.setVisibility(View.GONE);
+
+                        activityCartBinding.textMsg1Cart.setVisibility(View.VISIBLE);
+                        activityCartBinding.textMsg1Cart.setText("Congratulations your final order has been Shipped successfully. Your order will be at your door step son");
+                        activityCartBinding.nextProcessBtn.setVisibility(View.GONE);
+
+                        Toast.makeText(CartActivity.this, "You can purchase more products once your received your first final order", Toast.LENGTH_SHORT).show();
+                    }else if(shippingState.equals("not shipped")){
+                        activityCartBinding.totalPrice.setText("Order Status: Not shipped");
+                        recyclerView.setVisibility(View.GONE);
+
+                        activityCartBinding.textMsg1Cart.setVisibility(View.VISIBLE);
+                        activityCartBinding.nextProcessBtn.setVisibility(View.GONE);
+
+                        Toast.makeText(CartActivity.this, "You can purchase more products once your received your first final order", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 
     private void setTotalPrice(@NonNull Cart model) {
         String price = model.getPrice();
