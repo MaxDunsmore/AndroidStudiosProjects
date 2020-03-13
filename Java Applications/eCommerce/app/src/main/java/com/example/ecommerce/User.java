@@ -65,4 +65,6 @@ public class User extends BaseObservable {
     private String phoneNumber;
     private String image;
     private String address;
+
+
 }

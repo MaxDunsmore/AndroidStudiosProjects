@@ -35,17 +35,28 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener
-{
+        implements NavigationView.OnNavigationItemSelectedListener {
     private DatabaseReference ProductsRef;
     private RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
+    private String type = "";
+    public String dbName;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            type = getIntent().getStringExtra("Admin");
+            dbName = "Admins";
+        } else {
+            dbName = "Users";
+        }
+
         ProductsRef = FirebaseDatabase.getInstance().getReference().child("Products");
 
         Paper.init(this);
@@ -57,8 +68,12 @@ public class HomeActivity extends AppCompatActivity
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-            Intent intent = new Intent(HomeActivity.this,CartActivity.class);
-            startActivity(intent);
+            if (!type.equals("Admin")) {
+                Intent intent2 = new Intent(HomeActivity.this, CartActivity.class);
+                startActivity(intent2);
+            }// admin cart button needs to do something
+
+
         });
 
 
@@ -77,8 +92,11 @@ public class HomeActivity extends AppCompatActivity
         CircleImageView profileImageView = headerView.findViewById(R.id.user_profile_image);
 
         userNameTextView.setText(Prevalent.currentUserOnline.getName());
-        Picasso.get().load(Prevalent.currentUserOnline.getImage()).placeholder(R.drawable.profile).into(profileImageView);
 
+
+        if (Prevalent.currentUserOnline.getImage().length() > 3) {// find a better fix
+            Picasso.get().load(Prevalent.currentUserOnline.getImage()).placeholder(R.drawable.profile).into(profileImageView);
+        }
 
         recyclerView = findViewById(R.id.recycler_menu);
         recyclerView.setHasFixedSize(true);
@@ -88,8 +106,7 @@ public class HomeActivity extends AppCompatActivity
 
 
     @Override
-    protected void onStart()
-    {
+    protected void onStart() {
         super.onStart();
 
         FirebaseRecyclerOptions<Products> options =
@@ -101,25 +118,31 @@ public class HomeActivity extends AppCompatActivity
         FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
                     @Override
-                    protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull Products model)
-                    {
+                    protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull Products model) {
                         String stringPriceHome = "Price: " + model.getPrice();
                         holder.txtProductName.setText(model.getPname());
                         holder.txtProductDescription.setText(model.getDescription());
                         holder.txtProductPrice.setText(stringPriceHome);
+                        Picasso.get().load(model.getImage()).into(holder.imageView);
+
                         holder.imageView.setOnClickListener(v -> {
-                            Intent intent = new Intent(HomeActivity.this,ProductDetailsActivity.class );
-                            intent.putExtra("pid",model.getPid());
-                            startActivity(intent);
+                            if (type.equals("Admin")) {
+                                Intent intent = new Intent(HomeActivity.this, AdminMaintainProductsActivity.class);
+                                intent.putExtra("pid", model.getPid());
+                                startActivity(intent);
+                            } else {
+                                Intent intent = new Intent(HomeActivity.this, ProductDetailsActivity.class);
+                                intent.putExtra("pid", model.getPid());
+                                startActivity(intent);
+                            }
+
 
                         });
-                        Picasso.get().load(model.getImage()).into(holder.imageView);
                     }
 
                     @NonNull
                     @Override
-                    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
-                    {
+                    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_item_layout, parent, false);
                         return new ProductViewHolder(view);
                     }
@@ -139,7 +162,6 @@ public class HomeActivity extends AppCompatActivity
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -148,10 +170,8 @@ public class HomeActivity extends AppCompatActivity
     }
 
 
-
     @Override
-    public boolean onOptionsItemSelected(@NotNull MenuItem item)
-    {
+    public boolean onOptionsItemSelected(@NotNull MenuItem item) {
         //int id = item.getItemId();
 
 //        if (id == R.id.action_settings)
@@ -163,34 +183,28 @@ public class HomeActivity extends AppCompatActivity
     }
 
 
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item)
-    {
+    public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_cart)
-        {
-            Intent intent = new Intent(HomeActivity.this,CartActivity.class);
+        if (id == R.id.nav_cart) {
+            if (type.equals("Admin")) {
+                Intent intent = new Intent(HomeActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+
+        } else if (id == R.id.nav_search) {
+            Intent intent = new Intent(HomeActivity.this, SearchProductsActivity.class);
             startActivity(intent);
-        }
-        else if (id == R.id.nav_orders)
-        {
+        } else if (id == R.id.nav_categories) {
 
-        }
-        else if (id == R.id.nav_categories)
-        {
-
-        }
-        else if (id == R.id.nav_settings)
-        {
+        } else if (id == R.id.nav_settings) {
             Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
+            intent.putExtra("dbName", dbName);
             startActivity(intent);
-        }
-        else if (id == R.id.nav_logout)
-        {
+        } else if (id == R.id.nav_logout) {
             Paper.book().destroy();
 
             Intent intent = new Intent(HomeActivity.this, MainActivity.class);

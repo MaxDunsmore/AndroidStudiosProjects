@@ -27,6 +27,12 @@ public class AdminCategoryActivity extends AppCompatActivity {
         activityAdminCategoryBinding = DataBindingUtil.setContentView(this,R.layout.activity_admin_category);
         Paper.init(this);
 
+        activityAdminCategoryBinding.buttonMaintainAdmin.setOnClickListener(view ->{
+            Intent intent = new Intent(AdminCategoryActivity.this,HomeActivity.class);
+            intent.putExtra("Admin","Admin");
+            startActivity(intent);
+        });
+
         activityAdminCategoryBinding.buttonLogoutAdmin.setOnClickListener(v -> {
             Paper.book().destroy();
             Intent intent = new Intent(AdminCategoryActivity.this,MainActivity.class);

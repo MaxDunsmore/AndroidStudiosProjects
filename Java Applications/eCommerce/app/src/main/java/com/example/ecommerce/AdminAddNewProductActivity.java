@@ -72,10 +72,10 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
 
         public void inputProductImage (View view){
             openGallery();
-        }
-        public void addProductButtonClick(View view){
+        } // modify and add to maintain
+        public void addProductButtonClick(View view){ // modify and add to maintain
             ValidateProductData();
-        }
+        } // modify and add to maintain
     }
 
     private void ValidateProductData() {

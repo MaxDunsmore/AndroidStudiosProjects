@@ -48,6 +48,7 @@ public class SettingsActivity extends AppCompatActivity {
     public String checker = "";
     private String phoneNumberCheck;
     public String imageUriStore;
+    public String dbName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,18 +62,31 @@ public class SettingsActivity extends AppCompatActivity {
 
         userInfoDisplay();
     }
-
     private void userInfoDisplay() {
-        DatabaseReference UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(Prevalent.currentUserOnline.getPhoneNumber());
+        //pass intent from home to settings of dbNamee e.g. admins / users
+        dbName = getIntent().getStringExtra("dbName");
+        DatabaseReference UsersRef = FirebaseDatabase.getInstance().getReference().child(dbName).child(Prevalent.currentUserOnline.getPhoneNumber());
         UsersRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     if (dataSnapshot.child("image").exists()) {
-                        String image = dataSnapshot.child("image").getValue().toString();
-                        imageUriStore = image;
+                        if(dbName.equals("Admins")){
+                            String image = dataSnapshot.child("image").getValue().toString();
+                            imageUriStore = image;
+                            if (imageUriStore.length() > 10){
+                                Picasso.get().load(image).into(activitySettingsBinding.settingsProfileImage);
+                            }
+                        }else{
+                            String image = dataSnapshot.child("image").getValue().toString();
+                            imageUriStore = image;
+                            if (imageUriStore.length() > 10){
+                                Picasso.get().load(image).into(activitySettingsBinding.settingsProfileImage);
+                            }
+                        }
 
-                        Picasso.get().load(image).into(activitySettingsBinding.settingsProfileImage);
+
+
 
                     }
                     if (dataSnapshot.child("address").exists()) {
@@ -141,8 +155,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void updateOnlyUserInfo() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users");
-        //Toast.makeText(this, phoneNumberCheck + " : " + activitySettingsBinding.settingsPhoneNumber.getText().toString(), Toast.LENGTH_Long).show();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(dbName);
         if (!activitySettingsBinding.settingsPhoneNumber.getText().toString().equals(phoneNumberCheck)) {
             ref.child(Prevalent.currentUserOnline.getPhoneNumber()).removeValue();
             Prevalent.currentUserOnline.setPhoneNumber(phoneNumberCheck);
@@ -196,7 +209,7 @@ public class SettingsActivity extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         if (imageUri != null) {
-            final StorageReference fileRef = storageProfilePictureRef.child(Prevalent.currentUserOnline.getPhoneNumber());
+            final StorageReference fileRef = storageProfilePictureRef.child(Prevalent.currentUserOnline.getPhoneNumber() + dbName);
             uploadTask = fileRef.putFile(imageUri);
             uploadTask.continueWithTask((Continuation) task -> {
                 if (!task.isSuccessful()) {
@@ -206,13 +219,9 @@ public class SettingsActivity extends AppCompatActivity {
             })
                     .addOnCompleteListener((OnCompleteListener<Uri>) task -> {
                         if (task.isSuccessful()) {
-                    /*
-                    add code to delete entry if phone number is changed and re add to firebase
-                     */
-
                             Uri downloadUrl = task.getResult();
                             myUrl = downloadUrl.toString();
-                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users");
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(dbName);
 
                             if (!activitySettingsBinding.settingsPhoneNumber.getText().toString().equals(phoneNumberCheck)) {
                                 ref.child(Prevalent.currentUserOnline.getPhoneNumber()).removeValue();

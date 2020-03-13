@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/slogan_category"
-            android:layout_above="@id/button_check_orders_admin"
+            android:layout_above="@id/button_maintain_admin"
             >
 
             <RelativeLayout
@@ -484,6 +484,20 @@
                 </HorizontalScrollView>
             </RelativeLayout>
         </ScrollView>
+        <Button
+            android:id="@+id/button_maintain_admin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/button_check_orders_admin"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="Maintain Products"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
+            android:textAllCaps="false"
+            />
         <Button
             android:id="@+id/button_logout_admin"
             android:layout_width="match_parent"
