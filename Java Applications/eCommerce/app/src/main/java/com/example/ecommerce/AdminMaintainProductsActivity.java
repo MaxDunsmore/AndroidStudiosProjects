@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -77,11 +78,22 @@ public class AdminMaintainProductsActivity extends AppCompatActivity {
             ValidateProductData();
         });
         activityAdminMaintainProductsBinding.buttonDeleteMaintain.setOnClickListener(view->{
-            productRef.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    Toast.makeText(AdminMaintainProductsActivity.this, "Product Deleted", Toast.LENGTH_SHORT).show();
-                    finish();
+            CharSequence[] options = new CharSequence[]{
+                    "Yes - Delete Product",
+                    "No"
+            };
+            AlertDialog.Builder builder = new AlertDialog.Builder(AdminMaintainProductsActivity.this);
+            builder.setTitle("Would you like to delete this product?");
+            builder.setItems(options, (dialog, which) -> {
+                if (which == 0) {
+                    builder.show();
+                    productRef.removeValue().addOnCompleteListener(task -> {
+                        Toast.makeText(AdminMaintainProductsActivity.this, "Product Deleted", Toast.LENGTH_SHORT).show();
+                        finish();
+                    });
+                }
+                if (which == 1) {
+                    dialog.dismiss();
                 }
             });
         });
