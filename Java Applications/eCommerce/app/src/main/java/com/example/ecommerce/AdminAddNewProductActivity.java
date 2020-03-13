@@ -179,9 +179,8 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         Toast.makeText(AdminAddNewProductActivity.this, "Product Added Successfully", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(AdminAddNewProductActivity.this,AdminCategoryActivity.class);
-                        startActivity(intent);
                         loadingBar.dismiss();
+                        finish();
                     }else {
                         loadingBar.dismiss();
                         String message = task.getException().toString();
