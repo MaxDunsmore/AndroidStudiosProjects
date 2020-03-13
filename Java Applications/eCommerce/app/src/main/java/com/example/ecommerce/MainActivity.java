@@ -23,11 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import io.paperdb.Paper;
 
 public class MainActivity extends AppCompatActivity {
-
-    // data binding
     ActivityMainBinding mainBinding;
-
-    // vars
     private ClickHandler clickHandler;
     String parentDbName = "Users";
     private ProgressDialog loadingBar;
@@ -48,10 +44,7 @@ public class MainActivity extends AppCompatActivity {
             this.context = context;
         }
         public void loginButtonClick(View view){
-
             checkRememberBox();
-
-
         }
         public void joinNowButtonClick(View view){
             Intent intent = new Intent(MainActivity.this,RegisterActivity.class);

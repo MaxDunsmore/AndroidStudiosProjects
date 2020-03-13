@@ -24,9 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import io.paperdb.Paper;
 
 public class LoginActivity extends AppCompatActivity {
-    // data binding
     ActivityLoginBinding loginBinding;
-
     public User user;
     private ProgressDialog loadingBar;
     private String parentDbName = "Users";
@@ -38,13 +36,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         loginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         loadingBar = new ProgressDialog(this);
-
-        // bind user
         user = new User();
         loginBinding.setUser(user);
-
-        // bind clickHandler
-        // vars
         ClickHandler clickHandler = new ClickHandler(this);
         loginBinding.setClickHandler(clickHandler);
 
@@ -81,7 +74,6 @@ public class LoginActivity extends AppCompatActivity {
 
         public void loginButtonClick(View view) {
             loginUser();
-
         }
     }
 
@@ -99,7 +91,6 @@ public class LoginActivity extends AppCompatActivity {
             loadingBar.setMessage("Logging in, Please wait");
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
-
             AllowAccessToAccount(phoneNumber,password);
         }
     }
@@ -108,9 +99,7 @@ public class LoginActivity extends AppCompatActivity {
             Paper.book().write(Prevalent.UserPhoneKey,phoneNumber);
             Paper.book().write(Prevalent.UserPasswordKey,password);
             Paper.book().write(Prevalent.UserAccountType,parentDbName);
-
         }
-
         final DatabaseReference RootRef = FirebaseDatabase.getInstance().getReference();
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -131,8 +120,6 @@ public class LoginActivity extends AppCompatActivity {
                                loadingBar.dismiss();
                                Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
                                Prevalent.currentUserOnline = userData;
-                               //intent.putExtra("dbName","Users");
-
                                startActivity(intent);
                            }
                         }
@@ -146,7 +133,6 @@ public class LoginActivity extends AppCompatActivity {
                     loadingBar.dismiss();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

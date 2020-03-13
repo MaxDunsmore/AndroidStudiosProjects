@@ -68,37 +68,32 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
                             intent.putExtra("uid",uID);
                             startActivity(intent);
                         });
-                        // change to include confirmed
-                        holder.itemView.setOnClickListener(new View.OnClickListener()
-                        {
-                            @Override
-                            public void onClick(View v) {
-                                CharSequence options[] = new CharSequence[]
-                                        {
-                                                "Confirm Order",
-                                                "Order Shipped",
-                                                "Cancel"
+                        holder.itemView.setOnClickListener(v -> {
+                            CharSequence options1[] = new CharSequence[]
+                                    {
+                                            "Confirm Order",
+                                            "Order Shipped",
+                                            "Cancel"
 
-                                        };
+                                    };
 
-                                AlertDialog.Builder builder = new AlertDialog.Builder(AdminNewOrdersActivity.this);
-                                builder.setTitle("Have you shipped this product");
-                                builder.setItems(options, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        String uID = getRef(position).getKey();
-                                        if(which == 0){
-                                            ordersRef.child(uID).child("state").setValue("confirmed");
-                                        }else if(which == 1){
-                                            RemoveOrder(uID);
-                                        }
-                                        else{
-                                            finish();
-                                        }
+                            AlertDialog.Builder builder = new AlertDialog.Builder(AdminNewOrdersActivity.this);
+                            builder.setTitle("Have you shipped this product");
+                            builder.setItems(options1, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String uID = getRef(position).getKey();
+                                    if(which == 0){
+                                        ordersRef.child(uID).child("state").setValue("confirmed");
+                                    }else if(which == 1){
+                                        RemoveOrder(uID);
                                     }
-                                });
-                                builder.show();
-                            }
+                                    else{
+                                        finish();
+                                    }
+                                }
+                            });
+                            builder.show();
                         });
                     }
 
@@ -119,9 +114,9 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
     }
 
     public static class AdminOrdersViewHolder extends RecyclerView.ViewHolder{
-        public TextView userName, userPhoneNumber, userTotalPrice, userDateTime, userShippingAddress;
-        public Button showOrderButton;
-        public AdminOrdersViewHolder(@NonNull View itemView) {
+        TextView userName, userPhoneNumber, userTotalPrice, userDateTime, userShippingAddress;
+        Button showOrderButton;
+        AdminOrdersViewHolder(@NonNull View itemView) {
             super(itemView);
             userName = itemView.findViewById(R.id.orders_user_name);
             userPhoneNumber = itemView.findViewById(R.id.order_phone_number);

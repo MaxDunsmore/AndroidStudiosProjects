@@ -35,7 +35,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.logging.Logger;
 
 public class AdminMaintainProductsActivity extends AppCompatActivity {
     ActivityAdminMaintainProductsBinding activityAdminMaintainProductsBinding;
@@ -43,7 +42,10 @@ public class AdminMaintainProductsActivity extends AppCompatActivity {
     private DatabaseReference productRef;
     private static final int GalleryPick = 1;
     private Uri imageUri;
-    private String description, price, productName, saveCurrentDate, descriptionLong;
+    private String description;
+    private String price;
+    private String productName;
+    private String descriptionLong;
     private ProgressDialog loadingBar;
     private String productRandomKey;
     private String downloadImageUrl = "";
@@ -51,6 +53,7 @@ public class AdminMaintainProductsActivity extends AppCompatActivity {
     private StorageReference productImagesRef;
     private DatabaseReference productsRef;
     private String tracker = "";
+    public String saveCurrentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,15 +62,12 @@ public class AdminMaintainProductsActivity extends AppCompatActivity {
 
         productID = getIntent().getStringExtra("pid");
         productRef = FirebaseDatabase.getInstance().getReference().child("Products").child(productID);
-        displaySpecificProductInfo();
-
-        intent = getIntent();
-
         productImagesRef = FirebaseStorage.getInstance().getReference().child("Product Images");
         productsRef = FirebaseDatabase.getInstance().getReference().child("Products");
-
+        intent = getIntent();
         loadingBar = new ProgressDialog(this);
 
+        displaySpecificProductInfo();
         getProductDetails();
 
         activityAdminMaintainProductsBinding.productImageMaintain.setOnClickListener(view -> {
@@ -77,13 +77,7 @@ public class AdminMaintainProductsActivity extends AppCompatActivity {
             startActivityForResult(galleryIntent, GalleryPick);
             tracker = "clicked";
         });
-        activityAdminMaintainProductsBinding.buttonApplyMaintain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ValidateProductData();
-            }
-        });
-
+        activityAdminMaintainProductsBinding.buttonApplyMaintain.setOnClickListener(v -> ValidateProductData());
         activityAdminMaintainProductsBinding.buttonDeleteMaintain.setOnClickListener(view -> {
 
             CharSequence[] options = new CharSequence[]{
@@ -110,14 +104,12 @@ public class AdminMaintainProductsActivity extends AppCompatActivity {
         ClickHandler clickHandler = new ClickHandler(this);
         activityAdminMaintainProductsBinding.setClickHandler(clickHandler);
     }
+
     public class ClickHandler {
         private Context context;
 
         public ClickHandler(Context context) {
             this.context = context;
-        }
-        public void changeProductClick(View view){
-            ValidateProductData();
         }
     }
 
@@ -146,43 +138,36 @@ public class AdminMaintainProductsActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         saveCurrentDate = calendar.getTime().toString();
         productRandomKey = productID;
-        Log.d("!@!@!@!@1","");
         if (!tracker.equals("")) {
             final StorageReference filePath = productImagesRef.child(imageUri.getLastPathSegment() + productRandomKey + ".jpg");
             final UploadTask uploadTask = filePath.putFile(imageUri);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    String message = e.toString();
-                    Toast.makeText(AdminMaintainProductsActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
-                    loadingBar.dismiss();
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(AdminMaintainProductsActivity.this, "Product Image uploaded Successfully", Toast.LENGTH_SHORT).show();
+            uploadTask.addOnFailureListener(e -> {
+                String message = e.toString();
+                Toast.makeText(AdminMaintainProductsActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
+                loadingBar.dismiss();
+            }).addOnSuccessListener(taskSnapshot -> {
+                Toast.makeText(AdminMaintainProductsActivity.this, "Product Image uploaded Successfully", Toast.LENGTH_SHORT).show();
 
-                    Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                        @Override
-                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                            if (!task.isSuccessful()) {
-                                loadingBar.dismiss();
-                                throw task.getException();
-                            }
-                            downloadImageUrl = filePath.getDownloadUrl().toString();
-                            return filePath.getDownloadUrl();
+                Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if (!task.isSuccessful()) {
+                            loadingBar.dismiss();
+                            throw task.getException();
                         }
-                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Uri> task) {
-                            if (task.isSuccessful()) {
-                                downloadImageUrl = task.getResult().toString();
-                                Toast.makeText(AdminMaintainProductsActivity.this, "Product image Url successfully retrieved", Toast.LENGTH_SHORT).show();
-                                SaveProductInfoToDatabase();
-                            }
+                        downloadImageUrl = filePath.getDownloadUrl().toString();
+                        return filePath.getDownloadUrl();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()) {
+                            downloadImageUrl = task.getResult().toString();
+                            Toast.makeText(AdminMaintainProductsActivity.this, "Product image Url successfully retrieved", Toast.LENGTH_SHORT).show();
+                            SaveProductInfoToDatabase();
                         }
-                    });
-                }
+                    }
+                });
             });
         } else {
             SaveProductInfoToDatabase();

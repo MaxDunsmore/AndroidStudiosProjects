@@ -99,7 +99,7 @@ public class CartActivity extends AppCompatActivity {
 
 
                 holder.itemView.setOnClickListener(view -> {
-                    CharSequence options[] = new CharSequence[]{
+                    CharSequence[] options = new CharSequence[]{
                             "Edit",
                             "Remove"
                     };
@@ -131,7 +131,8 @@ public class CartActivity extends AppCompatActivity {
                                         double quantityInt = Double.parseDouble(model.getQuantity());
                                         double productTotalPrice = priceInt * quantityInt;
                                         orderTotalPrice = orderTotalPrice - productTotalPrice;
-                                        activityCartBinding.totalPrice.setText("Total Price: $" + orderTotalPrice);
+                                        String orderTotalPriceString = "Total Price: $" + orderTotalPrice;
+                                        activityCartBinding.totalPrice.setText(orderTotalPriceString);
                                     });
                         }
                     });
@@ -163,7 +164,8 @@ public class CartActivity extends AppCompatActivity {
                     String userName = dataSnapshot.child("state").getValue().toString();
 
                     if(shippingState.equals("shipped")){
-                        activityCartBinding.totalPrice.setText("Dear " + userName + "\n order is shipped successfully");
+                        String shippedMessage = "Dear " + userName + "\n order is shipped successfully";
+                        activityCartBinding.totalPrice.setText(shippedMessage);
                         recyclerView.setVisibility(View.GONE);
 
                         activityCartBinding.textMsg1Cart.setVisibility(View.VISIBLE);
@@ -198,6 +200,7 @@ public class CartActivity extends AppCompatActivity {
 
         double productTotalPrice = priceInt * quantityInt;
         orderTotalPrice = orderTotalPrice + productTotalPrice;
-        activityCartBinding.totalPrice.setText("Total Price: $" + Double.toString(orderTotalPrice));
+        final String totalPriceString = "Total Price: $" + orderTotalPrice;
+        activityCartBinding.totalPrice.setText(totalPriceString);
     }
 }

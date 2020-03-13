@@ -167,7 +167,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 activityProductDetailsBinding.longDescriptionProductDetailsText.setVisibility(View.VISIBLE);
                 activityProductDetailsBinding.imageArrowProductDetails.setImageResource(R.drawable.whitearrowup);
                 descriptionStatus = true;
-            } else if (descriptionStatus) {
+            } else {
                 activityProductDetailsBinding.longDescriptionProductDetails.setText("Product description");
                 activityProductDetailsBinding.longDescriptionProductDetailsText.setVisibility(View.INVISIBLE);
                 activityProductDetailsBinding.imageArrowProductDetails.setImageResource(R.drawable.whitearrowdown);

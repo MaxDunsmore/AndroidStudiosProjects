@@ -56,33 +56,24 @@ public class HomeActivity extends AppCompatActivity
         } else {
             dbName = "Users";
         }
-
         ProductsRef = FirebaseDatabase.getInstance().getReference().child("Products");
-
         Paper.init(this);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Home");
         setSupportActionBar(toolbar);
-
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
             if (!type.equals("Admin")) {
                 Intent intent2 = new Intent(HomeActivity.this, CartActivity.class);
                 startActivity(intent2);
-            }// admin cart button needs to do something
-
-
+            }
         });
-
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -92,8 +83,6 @@ public class HomeActivity extends AppCompatActivity
         CircleImageView profileImageView = headerView.findViewById(R.id.user_profile_image);
 
         userNameTextView.setText(Prevalent.currentUserOnline.getName());
-
-
         if (Prevalent.currentUserOnline.getImage().length() > 3) {// find a better fix
             Picasso.get().load(Prevalent.currentUserOnline.getImage()).placeholder(R.drawable.profile).into(profileImageView);
         }
@@ -104,7 +93,6 @@ public class HomeActivity extends AppCompatActivity
         recyclerView.setLayoutManager(layoutManager);
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -113,7 +101,6 @@ public class HomeActivity extends AppCompatActivity
                 new FirebaseRecyclerOptions.Builder<Products>()
                         .setQuery(ProductsRef, Products.class)
                         .build();
-
 
         FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
@@ -124,7 +111,6 @@ public class HomeActivity extends AppCompatActivity
                         holder.txtProductDescription.setText(model.getDescription());
                         holder.txtProductPrice.setText(stringPriceHome);
                         Picasso.get().load(model.getImage()).into(holder.imageView);
-
                         holder.imageView.setOnClickListener(v -> {
                             if (type.equals("Admin")) {
                                 Intent intent = new Intent(HomeActivity.this, AdminMaintainProductsActivity.class);

@@ -38,9 +38,7 @@ import io.paperdb.Paper;
 
 public class SettingsActivity extends AppCompatActivity {
     ActivitySettingsBinding activitySettingsBinding;
-    // vars
     private ClickHandler clickHandler;
-
     public Uri imageUri;
     public String myUrl = "";
     private StorageTask uploadTask;
@@ -54,16 +52,12 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activitySettingsBinding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
-
         storageProfilePictureRef = FirebaseStorage.getInstance().getReference().child("Profile Pictures");
         clickHandler = new ClickHandler(this);
         activitySettingsBinding.setClickHandler(clickHandler);
-
-
         userInfoDisplay();
     }
     private void userInfoDisplay() {
-        //pass intent from home to settings of dbNamee e.g. admins / users
         dbName = getIntent().getStringExtra("dbName");
         DatabaseReference UsersRef = FirebaseDatabase.getInstance().getReference().child(dbName).child(Prevalent.currentUserOnline.getPhoneNumber());
         UsersRef.addValueEventListener(new ValueEventListener() {
@@ -84,10 +78,6 @@ public class SettingsActivity extends AppCompatActivity {
                                 Picasso.get().load(image).into(activitySettingsBinding.settingsProfileImage);
                             }
                         }
-
-
-
-
                     }
                     if (dataSnapshot.child("address").exists()) {
                         String address = dataSnapshot.child("address").getValue().toString();
@@ -95,26 +85,17 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                     String name = dataSnapshot.child("name").getValue().toString();
                     String password = dataSnapshot.child("password").getValue().toString();
-
-
                     String phoneNumber = dataSnapshot.child("phoneNumber").getValue().toString();
                     activitySettingsBinding.settingsPhoneNumber.setText(phoneNumber);
                     phoneNumberCheck = phoneNumber;
-
-
-
                     activitySettingsBinding.settingsFullName.setText(name);
                     activitySettingsBinding.settingsPassword.setText(password);
-
-
                 }else{
                     Toast.makeText(SettingsActivity.this, "Data Base Error, please restart the app", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }
@@ -168,9 +149,7 @@ public class SettingsActivity extends AppCompatActivity {
         userMap.put("image", imageUriStore);
         Paper.book().write(Prevalent.UserPhoneKey,activitySettingsBinding.settingsPhoneNumber.getText().toString());
         Paper.book().write(Prevalent.UserPasswordKey,activitySettingsBinding.settingsPassword.getText().toString());
-
         Prevalent.currentUserOnline.setName(activitySettingsBinding.settingsFullName.getText().toString());
-
         ref.child(activitySettingsBinding.settingsPhoneNumber.getText().toString()).updateChildren(userMap);
         Prevalent.currentUserOnline.setPhoneNumber(activitySettingsBinding.settingsPhoneNumber.getText().toString());
         startActivity(new Intent(SettingsActivity.this, HomeActivity.class));
@@ -235,11 +214,8 @@ public class SettingsActivity extends AppCompatActivity {
                             userMap.put("image", myUrl);
                             ref.child(activitySettingsBinding.settingsPhoneNumber.getText().toString()).updateChildren(userMap);
                             Prevalent.currentUserOnline.setName(activitySettingsBinding.settingsFullName.getText().toString());
-
-
                             Prevalent.currentUserOnline.setImage(myUrl);
                             Prevalent.currentUserOnline.setPhoneNumber(activitySettingsBinding.settingsPhoneNumber.getText().toString());
-
                             progressDialog.dismiss();
                             startActivity(new Intent(SettingsActivity.this, HomeActivity.class));
                             Toast.makeText(SettingsActivity.this, "Profile Information successfully updated", Toast.LENGTH_SHORT).show();

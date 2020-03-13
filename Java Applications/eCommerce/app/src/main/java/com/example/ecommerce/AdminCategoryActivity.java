@@ -15,11 +15,7 @@ import com.example.ecommerce.databinding.ActivityAdminCategoryBinding;
 import io.paperdb.Paper;
 
 public class AdminCategoryActivity extends AppCompatActivity {
-    //data binding
     ActivityAdminCategoryBinding activityAdminCategoryBinding;
-
-    // vars
-    private ClickHandler clickHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -21,10 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
-
-    // data binding
     ActivityRegisterBinding activityRegisterBinding;
-
     private User user;
     private ProgressDialog loadingBar;
 
@@ -32,12 +29,9 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityRegisterBinding = DataBindingUtil.setContentView(this, R.layout.activity_register);
-
         loadingBar = new ProgressDialog(this);
-
         user = new User();
         activityRegisterBinding.setUser(user);
-        // vars
         ClickHandler clickHandler = new ClickHandler(this);
         activityRegisterBinding.setClickHandler(clickHandler);
 
