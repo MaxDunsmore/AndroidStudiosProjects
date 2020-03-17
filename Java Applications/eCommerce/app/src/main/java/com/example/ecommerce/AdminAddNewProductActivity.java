@@ -49,6 +49,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
         activityAdminAddNewProductBinding.setClickHandler(clickHandler);
         intent = getIntent();
         categoryName = getIntent().getExtras().get("category").toString();
+        Toast.makeText(this, "Category: " + categoryName, Toast.LENGTH_LONG).show();
         productImagesRef = FirebaseStorage.getInstance().getReference().child("Product Images");
         productsRef = FirebaseDatabase.getInstance().getReference().child("Products");
         loadingBar = new ProgressDialog(this);

@@ -121,8 +121,6 @@ public class HomeActivity extends AppCompatActivity
                                 intent.putExtra("pid", model.getPid());
                                 startActivity(intent);
                             }
-
-
                         });
                     }
 
